@@ -5,7 +5,7 @@ import Pages.LoginPage;
 import org.testng.annotations.Test;
 
 public class LoginTest extends BaseTest {
-    @Test
+    @Test (priority = 1)
     public void LoginSuccess(){
 
         LoginPage login = new LoginPage(driver);
@@ -14,7 +14,7 @@ public class LoginTest extends BaseTest {
         LoginPage.verifyLoginSuccess();
     }
 
-    @Test ()
+    @Test (priority = 2)
     public void EmailEmpty(){
         LoginPage login = new LoginPage(driver);
         LoginPage.Login("", "123456");
@@ -22,26 +22,26 @@ public class LoginTest extends BaseTest {
 
     }
 
-    @Test()
+    @Test(priority = 3)
     public void PasswordEmpty(){
         LoginPage login = new LoginPage(driver);
         LoginPage.Login("admin@example.com", "");
         LoginPage.verifyPasswordEmptyWarning();
     }
-    @Test ()
+    @Test (priority = 4)
     public void EmailWrong(){
         LoginPage login = new LoginPage(driver);
         LoginPage.Login("admin1@exmample.com","123456");
         LoginPage.verifyEmailWrong();
     }
 
-    @Test ()
+    @Test (priority = 5)
     public void PassWrong(){
         LoginPage login = new LoginPage(driver);
         LoginPage.Login("admin@example.com", "abcdef");
         LoginPage.verifyPasswordWrong();
     }
-    @Test ()
+    @Test (priority = 6)
     public void emailFormatWrong(){
         LoginPage login = new LoginPage(driver);
         LoginPage.Login("abc", "123456");

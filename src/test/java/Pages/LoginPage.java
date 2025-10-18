@@ -9,19 +9,12 @@ import org.testng.Assert;
 public class LoginPage {
     private static WebDriver driver;
     public static String url = "https://crm.anhtester.com/admin/authentication";
-    //public static String inputEmail = "//input[@id='email']";
     private static By inputEmail = By.xpath("//input[@id='email']");
-    //public static String inputPassword = "//input[@id='password']";
     private static By inputPassword = By.xpath("//input[@id='password']");
-    //public static String checkboxRememberMe = "//label[normalize-space()='Remember me']";
     private static By checkboxRememberMe = By.xpath("//label[normalize-space()='Remember me']");
-    //public static String buttonLogin = "//button[normalize-space()='Login']";
     private static By buttonLogin = By.xpath("//button[normalize-space()='Login']");
-    //public static String emailEmptyWarning = "//div[normalize-space()='The Email Address field is required.']";
     private  static By emailEmptyWarning = By.xpath("//div[normalize-space()='The Email Address field is required.']");
-    //public static String passwordEmptyWarning = "//div[normalize-space()='The Password field is required.']";
     private  static By passwordEmptyWarning = By.xpath("//div[normalize-space()='The Password field is required.']");
-    //public static String email_pwWrongWarning = "//div[@class='text-center alert alert-danger']";
     private  static By email_pwWrongWarning = By.xpath("//div[@class='text-center alert alert-danger']");
 
     public LoginPage(WebDriver driver){
