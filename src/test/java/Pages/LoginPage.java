@@ -20,12 +20,21 @@ public class LoginPage {
     public LoginPage(WebDriver driver){
         this.driver = driver;
     }
-    public static void Login(String email, String password){
+    public static void LoginTest(String email, String password){
         driver.get(url);
         CommonAction common = new CommonAction(driver);
         CommonAction.sendKey(inputEmail,email);
         CommonAction.sendKey(inputPassword, password);
         CommonAction.click(buttonLogin);
+    }
+
+    public BasePage Login(String email, String password){
+        driver.get(url);
+        CommonAction common = new CommonAction(driver);
+        CommonAction.sendKey(inputEmail,email);
+        CommonAction.sendKey(inputPassword, password);
+        CommonAction.click(buttonLogin);
+        return new BasePage(driver);
     }
 
     public static void LoginWithRememberMe(String email, String password){

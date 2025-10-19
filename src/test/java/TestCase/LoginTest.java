@@ -17,7 +17,7 @@ public class LoginTest extends BaseTest {
     @Test (priority = 2)
     public void EmailEmpty(){
         LoginPage login = new LoginPage(driver);
-        LoginPage.Login("", "123456");
+        LoginPage.LoginTest("", "123456");
         LoginPage.verifyEmailEmptyWarning();
 
     }
@@ -25,26 +25,26 @@ public class LoginTest extends BaseTest {
     @Test(priority = 3)
     public void PasswordEmpty(){
         LoginPage login = new LoginPage(driver);
-        LoginPage.Login("admin@example.com", "");
+        LoginPage.LoginTest("admin@example.com", "");
         LoginPage.verifyPasswordEmptyWarning();
     }
     @Test (priority = 4)
     public void EmailWrong(){
         LoginPage login = new LoginPage(driver);
-        LoginPage.Login("admin1@exmample.com","123456");
+        LoginPage.LoginTest("admin1@exmample.com","123456");
         LoginPage.verifyEmailWrong();
     }
 
     @Test (priority = 5)
     public void PassWrong(){
         LoginPage login = new LoginPage(driver);
-        LoginPage.Login("admin@example.com", "abcdef");
+        LoginPage.LoginTest("admin@example.com", "abcdef");
         LoginPage.verifyPasswordWrong();
     }
     @Test (priority = 6)
     public void emailFormatWrong(){
         LoginPage login = new LoginPage(driver);
-        LoginPage.Login("abc", "123456");
+        LoginPage.LoginTest("abc", "123456");
         LoginPage.verifyEmailFormat();
     }
 }
