@@ -1,17 +1,21 @@
 package Pages;
 
-import Common.CommonAction;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class BasePage {
-    private static WebDriver driver;
+    public static WebDriver driver;
     private static By salesSubMenuList = By.xpath("//li[@class = 'menu-item-sales active']/ul/li");
     private static By listMenu = By.xpath("//ul[@id='side-menu']/li[contains(@class,'menu-item')]");
     private static By dashboardMenu = By.xpath("//span[normalize-space()='Dashboard']");
@@ -146,27 +150,65 @@ public class BasePage {
 
     }
     public static void checkSaleSubMenu() throws InterruptedException {
-        CommonAction common = new CommonAction(driver);
-        CommonAction.click(salesMenu);
+        click(salesMenu);
         Thread.sleep(1000);
         List<String> saleSubMenuList = BasePage.getSaleSubMenuList();
         Assert.assertEquals(saleSubMenuList, expectedSalesSubMenuList, " Sale sub menu list does not match!");
     }
 
     public static void checkUtilitiesSubMenu() throws InterruptedException {
-        CommonAction common = new CommonAction(driver);
-        CommonAction.click(utilitiesMenu);
+        click(utilitiesMenu);
         Thread.sleep(1000);
         List<String> unitiliesSubMenuList = BasePage.getUtilitiesSubMenuList();
         Assert.assertEquals(unitiliesSubMenuList, expectedUtilitesSubMenuList, " Utilities sub menu list does not match!");
     }
 
     public static void checkReportsSubMenu() throws InterruptedException {
-        CommonAction common = new CommonAction(driver);
-        CommonAction.click(reportMenu);
-       // CommonAction.moveToElement(reportsKnowledge_base_articlesMenu);
+        click(reportMenu);
         Thread.sleep(1000);
         List<String> reportsSubMenuList = BasePage.getReportsSubMenuList();
         Assert.assertEquals(reportsSubMenuList, expectedReportsSubMenuList, " Reports sub menu list does not match!");
+    }
+
+
+//============================================================================================
+
+    public static void sendKey(By by, String message){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+        driver.findElement(by).sendKeys(message);
+    }
+
+    public static void click(By by){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.elementToBeClickable(by));
+        driver.findElement(by).click();
+    }
+
+    public static void clearText(By by){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+        driver.findElement(by).clear();
+    }
+
+    public static String getText(By by){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+        return driver.findElement(by).getText();
+    }
+    public  static void softAssertEqual(String actual, String expected){
+        SoftAssert softassert = new SoftAssert();
+        softassert.assertEquals(actual,expected);
+    }
+
+    public static void softAssertTrue(Boolean condition, String message){
+        SoftAssert softassert = new SoftAssert();
+        softassert.assertTrue(condition, message);
+    }
+    public static void moveToElement(By by){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+        Actions actions = new Actions(driver);
+        actions.moveToElement(element).perform();
     }
 }
