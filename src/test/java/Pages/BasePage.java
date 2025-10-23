@@ -170,6 +170,19 @@ public class BasePage {
         Assert.assertEquals(reportsSubMenuList, expectedReportsSubMenuList, " Reports sub menu list does not match!");
     }
 
+    public static void navigateCustomerPage(){
+        click(customersMenu);
+    }
+    public AddCustomerPage CustomerPage(){
+        click(customersMenu);
+        return new AddCustomerPage(driver);
+    }
+    public static void verifyNavigateCustomePage(){
+        navigateCustomerPage();
+        AddCustomerPage customerPage = new AddCustomerPage(driver);
+        Assert.assertTrue(driver.findElement(AddCustomerPage.customerSummaryTitle).isDisplayed());
+    }
+
 
 //============================================================================================
 

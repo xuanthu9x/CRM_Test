@@ -18,4 +18,11 @@ public class MenuTest extends BaseTest {
         BasePage.checkUtilitiesSubMenu();
         BasePage.checkReportsSubMenu();
     }
+    @Test()
+    public void verifyNavigateCustomerPage() throws InterruptedException {
+        login = new LoginPage(driver);
+        basePage = login.Login("admin@example.com","123456");
+        Thread.sleep(1000);
+        BasePage.verifyNavigateCustomePage();
+    }
 }
