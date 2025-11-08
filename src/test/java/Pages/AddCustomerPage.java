@@ -42,6 +42,7 @@ public class AddCustomerPage extends BasePage{
     private static By contactEmail = By.xpath("//input[@id='email']");
     private static By contactPW = By.xpath("//input[@name='password']");
     private static By contactSaveBtn = By.xpath("//button[normalize-space()='Save']");
+    private static By alertMessage = By.xpath("//div[@id = 'alert_float_1']/span[@class = 'alert-title']");
 
 
 
@@ -121,4 +122,12 @@ public class AddCustomerPage extends BasePage{
         Assert.assertEquals(actualContactEmail,email);
     }
 
+    public static void verifyAlertMessage(){
+        boolean isDisplay = isDisplay(alertMessage, 3000);
+        System.out.println("Is alert message displayed: "+ isDisplay);
+        Assert.assertTrue(isDisplay, "alert message is NOT display");
+
+        String alertContent = getText(alertMessage);
+        softAssertEqual(alertContent, "Customer added successfully.");
+    }
 }

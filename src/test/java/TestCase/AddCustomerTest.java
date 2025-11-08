@@ -12,13 +12,15 @@ public class AddCustomerTest extends BaseTest {
     AddCustomerPage addCustomerPage;
     @Test (priority = 1)
     public void AddCustomerWithOnlyRequiredField() throws InterruptedException {
+        String companyName="T_Test_081125";
         loginPage = new LoginPage(driver);
         basePage= loginPage.Login("admin@example.com","123456");
         addCustomerPage=basePage.CustomerPage();
-        AddCustomerPage.InputAddCustomerWithOnlyRequireField("T_Test1_231025");
+        AddCustomerPage.InputAddCustomerWithOnlyRequireField(companyName);
         AddCustomerPage.AddCustomerOnlySave();
+        AddCustomerPage.verifyAlertMessage();
         Thread.sleep(3000);
-        AddCustomerPage.verifyAddCustomerSuccessfully("T_Test1_231025");
+        AddCustomerPage.verifyAddCustomerSuccessfully(companyName);
     }
     @Test(priority = 2)
     public void AddCustomerWithFullInfor() throws InterruptedException {
@@ -28,6 +30,7 @@ public class AddCustomerTest extends BaseTest {
 
         AddCustomerPage.InputFullCustomerInfor("T_Test2_231025","VAT123","0336775288","google.com","java", "8414 Martin Luther King Jr Way South Seattle Washington 98118","Washington","Seattle","98118");
         AddCustomerPage.AddCustomerOnlySave();
+        AddCustomerPage.verifyAlertMessage();
         Thread.sleep(3000);
         AddCustomerPage.verifyAddCustomerSuccessfully("T_Test2_231025");
     }
@@ -40,6 +43,7 @@ public class AddCustomerTest extends BaseTest {
 
         AddCustomerPage.InputAddCustomerWithOnlyRequireField("T_Test3_231025");
         AddCustomerPage.AddCustomerAndContact();
+        AddCustomerPage.verifyAlertMessage();
         Thread.sleep(2000);
         AddCustomerPage.verifyAddCustomerWithContact("T_Test3_231025");
     }
@@ -51,6 +55,7 @@ public class AddCustomerTest extends BaseTest {
 
         AddCustomerPage.InputFullCustomerInfor("T_Test4_231025","VAT123","0336775288","google.com","java", "8414 Martin Luther King Jr Way South Seattle Washington 98118","Washington","Seattle","98118");
         AddCustomerPage.AddCustomerAndContact();
+        AddCustomerPage.verifyAlertMessage();
         Thread.sleep(3000);
         AddCustomerPage.verifyAddCustomerWithContact("T_Test4_231025");
     }
