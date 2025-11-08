@@ -1,6 +1,7 @@
 package Pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.bidi.log.Log;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
@@ -12,7 +13,7 @@ public class AddCustomerPage extends BasePage{
     }
     public static By menuCustomer = By.xpath("//span[normalize-space()='Customers']");
     public static By btnNewCustomer = By.xpath("//div[@class='_buttons']/descendant::a[normalize-space()='New Customer']");
-    private static By inputCompany = By.xpath("//input[@id = 'company']");
+    private static By inputCompany = By.xpath("//input[@id='company']");
     private static By companyEmptyWarning = By.xpath("//p[@id='company-error']");
     private static By inputVAT = By.xpath("//input[@id = 'vat']");
     private static By inputPhone = By.xpath("//input[@id = 'phonenumber']");
@@ -51,15 +52,15 @@ public class AddCustomerPage extends BasePage{
         Assert.assertTrue(companyNameDisplay,"Add customer not successfully");
     }
 
-    public static void InputAddCustomerWithOnlyRequireField(String companyName1){
+  /*  public static void InputAddCustomerWithOnlyRequireField(String companyName1){
         click(btnNewCustomer);
         click(menuCustomer);
         click(btnNewCustomer);
         String companyName = companyName1;
         sendKey(inputCompany,companyName);
-    }
+    }*/
 
-    public static void InputFullCustomerInfor(String companyName, String VAT, String sdt, String webSite, String group, String address, String city, String state, String zipCode) throws InterruptedException {
+    public static void InputFullCustomerInfor(String companyName, String VAT, String sdt, String webSite, String group,String language, String address, String city, String state, String zipCode) throws InterruptedException {
 
         click(btnNewCustomer);
         sendKey(inputCompany,companyName);
@@ -78,7 +79,7 @@ public class AddCustomerPage extends BasePage{
         click(currencyDropdown);
         click(currencyOptionUSD);
         click(defaultLanguageDropdown);
-        click(defaultLanguageEnglish);
+        click(By.xpath("//span[normalize-space() = '"+language+"']"));
         sendKey(addressTextArea,address);
         sendKey(inputCity,city);
         sendKey(inputState,state);
@@ -116,11 +117,11 @@ public class AddCustomerPage extends BasePage{
         click(contactSaveBtn);
         Thread.sleep(1000);
     }
-    public static void verifyAddedContact(String email)
+    /*public static void verifyAddedContact(String email)
     {
         String actualContactEmail = getText(By.xpath("//a[contains(@href,'mailto')]"));
         Assert.assertEquals(actualContactEmail,email);
-    }
+    }*/
 
     public static void verifyAlertMessage(){
         boolean isDisplay = isDisplay(alertMessage, 3000);
@@ -129,5 +130,66 @@ public class AddCustomerPage extends BasePage{
 
         String alertContent = getText(alertMessage);
         softAssertEqual(alertContent, "Customer added successfully.");
+    }
+
+    public static void veriryCustomerDetail(String companyName, String VAT, String sdt, String webSite,String group,String currency, String language,String address, String city, String state, String zipCode){
+        String actualCompanyName = getContribute(inputCompany,"value");
+        softAssertEqual(actualCompanyName,companyName);
+
+        String actualVAT = getContribute(inputVAT, "value");
+        softAssertEqual(actualVAT,VAT);
+
+        String actualPhone = getContribute(inputPhone, "value");
+        softAssertEqual(actualPhone,sdt);
+
+        String actualWebsite = getContribute(inputWebsite, "value");
+        softAssertEqual(actualWebsite,webSite);
+
+        String actualGroup = getContribute(groupDropdown, "title");
+        softAssertEqual(actualGroup,group);
+
+        String actualCurrency = getContribute(currencyDropdown, "title");
+        softAssertEqual(actualCurrency,currency);
+
+        String actualLanguage = getContribute(defaultLanguageDropdown, "title");
+        softAssertEqual(actualLanguage,language);
+
+
+        String actualAddress = getContribute(addressTextArea,"value");
+        softAssertEqual(actualAddress,address);
+
+        String actualCity = getContribute(inputCity,"value");
+        softAssertEqual(actualCity,city);
+
+        String actualState = getContribute(inputState,"value");
+        softAssertEqual(actualState,state);
+
+        String actualZipCode = getContribute(inputZipCode,"value");
+        softAssertEqual(actualZipCode,zipCode);
+    }
+
+    public static void verifyContactDetail(String firstName, String lastName, String email){
+        By actualContactName = By.xpath("//td[@class = 'sorting_1']/a");
+        By emailLink = By.xpath("//a[contains(@href,'mailto')]");
+        String contactNameText = firstName + " " + lastName;
+        try{
+            isDisplay(actualContactName,3000);
+        }catch (Exception e){
+            System.out.println("Error: "+ e.getMessage());
+        }
+        String contactName = getText(actualContactName);
+        System.out.println("actual contact name: " + contactName);
+        System.out.println("expected contact name: " + firstName + " " + lastName);
+        softAssertEqual(contactName,contactNameText);
+
+        try{
+            isDisplay(emailLink,2000);
+        }catch (Exception e){
+            System.out.println("Error: "+ e.getMessage());
+        }
+        String actualEmail = getText(emailLink);
+        System.out.println("actual email: " + actualEmail);
+        System.out.println("expected email: " + email);
+        softAssertEqual(actualEmail,email);
     }
 }

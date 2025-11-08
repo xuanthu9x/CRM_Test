@@ -241,4 +241,10 @@ public class BasePage {
         }
         return isDisplayed;
     }
+
+    public static String getContribute(By by, String contribute){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+        return element.getAttribute(contribute);
+    }
 }

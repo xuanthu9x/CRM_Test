@@ -4,6 +4,7 @@ import Common.BaseTest;
 import Pages.AddCustomerPage;
 import Pages.BasePage;
 import Pages.LoginPage;
+import org.openqa.selenium.By;
 import org.testng.annotations.Test;
 
 public class AddCustomerTest extends BaseTest {
@@ -12,15 +13,32 @@ public class AddCustomerTest extends BaseTest {
     AddCustomerPage addCustomerPage;
     @Test (priority = 1)
     public void AddCustomerWithOnlyRequiredField() throws InterruptedException {
-        String companyName="T_Test_081125";
+
         loginPage = new LoginPage(driver);
         basePage= loginPage.Login("admin@example.com","123456");
         addCustomerPage=basePage.CustomerPage();
-        AddCustomerPage.InputAddCustomerWithOnlyRequireField(companyName);
+
+
+        String companyName="T_Test_081125";
+        String VATNumber="";
+        String phoneNumber="";
+        String website="";
+        String group ="";
+        String currency="";
+        String language="";
+        String address="";
+        String state="";
+        String city="";
+        String zipCode="";
+
+
+        //AddCustomerPage.InputAddCustomerWithOnlyRequireField(companyName);
+        AddCustomerPage.InputFullCustomerInfor(companyName,VATNumber,phoneNumber,website,group,language, address,city,state,zipCode);
         AddCustomerPage.AddCustomerOnlySave();
         AddCustomerPage.verifyAlertMessage();
         Thread.sleep(3000);
         AddCustomerPage.verifyAddCustomerSuccessfully(companyName);
+        AddCustomerPage.veriryCustomerDetail(companyName, VATNumber, phoneNumber, website, group,currency,language, address, city, state, zipCode);
     }
     @Test(priority = 2)
     public void AddCustomerWithFullInfor() throws InterruptedException {
@@ -28,11 +46,24 @@ public class AddCustomerTest extends BaseTest {
         basePage= loginPage.Login("admin@example.com","123456");
         addCustomerPage=basePage.CustomerPage();
 
-        AddCustomerPage.InputFullCustomerInfor("T_Test2_231025","VAT123","0336775288","google.com","java", "8414 Martin Luther King Jr Way South Seattle Washington 98118","Washington","Seattle","98118");
+        String companyName="T_Test2_081125";
+        String VATNumber="VAT123";
+        String phoneNumber="0444444444";
+        String website="google.com";
+        String group ="Gold";
+        String currency="USD$";
+        String language="English";
+        String address="273 an duong vuong";
+        String state="quan 5";
+        String city="ho chi minh";
+        String zipCode="11111";
+
+        AddCustomerPage.InputFullCustomerInfor(companyName,VATNumber,phoneNumber,website,group,language, address,city,state,zipCode);
         AddCustomerPage.AddCustomerOnlySave();
         AddCustomerPage.verifyAlertMessage();
         Thread.sleep(3000);
-        AddCustomerPage.verifyAddCustomerSuccessfully("T_Test2_231025");
+        AddCustomerPage.verifyAddCustomerSuccessfully(companyName);
+        AddCustomerPage.veriryCustomerDetail(companyName, VATNumber, phoneNumber, website, group,currency,language, address, city, state, zipCode);
     }
 
     @Test(priority = 3)
@@ -41,11 +72,25 @@ public class AddCustomerTest extends BaseTest {
         basePage= loginPage.Login("admin@example.com","123456");
         addCustomerPage=basePage.CustomerPage();
 
-        AddCustomerPage.InputAddCustomerWithOnlyRequireField("T_Test3_231025");
+        String companyName="T_Test_081125";
+        String VATNumber="";
+        String phoneNumber="";
+        String website="";
+        String group ="";
+        String currency="";
+        String language="";
+        String address="";
+        String state="";
+        String city="";
+        String zipCode="";
+
+        //AddCustomerPage.InputAddCustomerWithOnlyRequireField(companyName);
+        AddCustomerPage.InputFullCustomerInfor(companyName,VATNumber,phoneNumber,website,group,language, address,city,state,zipCode);
         AddCustomerPage.AddCustomerAndContact();
         AddCustomerPage.verifyAlertMessage();
         Thread.sleep(2000);
-        AddCustomerPage.verifyAddCustomerWithContact("T_Test3_231025");
+        AddCustomerPage.verifyAddCustomerWithContact(companyName);
+        AddCustomerPage.veriryCustomerDetail(companyName, VATNumber, phoneNumber, website, group,currency,language, address, city, state, zipCode);
     }
     @Test(priority = 4)
     public void AddCustomerAndCreateContactWithFullInfo() throws InterruptedException {
@@ -53,11 +98,24 @@ public class AddCustomerTest extends BaseTest {
         basePage= loginPage.Login("admin@example.com","123456");
         addCustomerPage=basePage.CustomerPage();
 
-        AddCustomerPage.InputFullCustomerInfor("T_Test4_231025","VAT123","0336775288","google.com","java", "8414 Martin Luther King Jr Way South Seattle Washington 98118","Washington","Seattle","98118");
+        String companyName="T_Test2_231025";
+        String VATNumber="VAT123";
+        String phoneNumber="0336775288";
+        String website="google.com";
+        String group ="Gold";
+        String currency="USD$";
+        String language="English";
+        String address="273 an duong vuong";
+        String state="quan 5";
+        String city="ho chi minh";
+        String zipCode="11111";
+
+        AddCustomerPage.InputFullCustomerInfor(companyName,VATNumber,phoneNumber,website,group, language,address,city,state,zipCode);
         AddCustomerPage.AddCustomerAndContact();
         AddCustomerPage.verifyAlertMessage();
         Thread.sleep(3000);
-        AddCustomerPage.verifyAddCustomerWithContact("T_Test4_231025");
+        AddCustomerPage.verifyAddCustomerWithContact(companyName);
+        AddCustomerPage.veriryCustomerDetail(companyName, VATNumber, phoneNumber, website, group,currency,language, address, city, state, zipCode);
     }
 
     @Test(priority = 5)
@@ -66,7 +124,7 @@ public class AddCustomerTest extends BaseTest {
         basePage= loginPage.Login("admin@example.com","123456");
         addCustomerPage=basePage.CustomerPage();
 
-        AddCustomerPage.InputAddCustomerWithOnlyRequireField("");
+       // AddCustomerPage.InputAddCustomerWithOnlyRequireField("");
         AddCustomerPage.AddCustomerOnlySave();
 
         AddCustomerPage.verifyRequireFieldWarning();
@@ -77,10 +135,33 @@ public class AddCustomerTest extends BaseTest {
         basePage= loginPage.Login("admin@example.com","123456");
         addCustomerPage=basePage.CustomerPage();
 
-        AddCustomerPage.InputAddCustomerWithOnlyRequireField("T_Test8_231025");
+        String companyName="T_Test6_081125";
+        String VATNumber="VAT123";
+        String phoneNumber="0336775288";
+        String website="google.com";
+        String group ="Gold";
+        String currency="USD$";
+        String language="English";
+        String address="273 an duong vuong";
+        String state="quan 5";
+        String city="ho chi minh";
+        String zipCode="11111";
+
+        //AddCustomerPage.InputAddCustomerWithOnlyRequireField("T_Test8_231025");
+
+        AddCustomerPage.InputFullCustomerInfor(companyName,VATNumber,phoneNumber,website,group, language,address,city,state,zipCode);
         AddCustomerPage.AddCustomerAndContact();
-        AddCustomerPage.addCustomerAndContacts("Test_Contact_231025","T_test","T_Test8@example.com","T_Test8");
-        AddCustomerPage.verifyAddCustomerSuccessfully("T_Test8_231025");
-        AddCustomerPage.verifyAddedContact("T_Test8@example.com");
+
+        String contactFirstName="binh";
+        String contactLastName="an";
+        String contactEmail="binhan@alert.com";
+        String contactPW="123456";
+        AddCustomerPage.addCustomerAndContacts(contactFirstName,contactLastName,contactEmail,contactPW);
+        AddCustomerPage.verifyAddCustomerSuccessfully(companyName);
+        //AddCustomerPage.verifyAddedContact("T_Test8@example.com");
+        AddCustomerPage.verifyContactDetail(contactFirstName,contactLastName,contactEmail);
+        driver.findElement(By.xpath("//li[contains(@class, 'customer_tab_profile')]")).click();
+        //Thread.sleep(2000);
+        AddCustomerPage.veriryCustomerDetail(companyName, VATNumber, phoneNumber, website, group,currency,language, address, city, state, zipCode);
     }
 }
