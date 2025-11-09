@@ -1,4 +1,5 @@
 package Pages;
+import keywords.Common;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -61,60 +62,65 @@ public class AddCustomerPage extends BasePage{
     }*/
 
     public static void InputFullCustomerInfor(String companyName, String VAT, String sdt, String webSite, String group,String language, String address, String city, String state, String zipCode) throws InterruptedException {
-
-        click(btnNewCustomer);
-        sendKey(inputCompany,companyName);
-        sendKey(inputVAT,VAT);
-        sendKey(inputPhone,sdt);
-        sendKey(inputWebsite,webSite);
-        click(groupDropdown);
-        sendKey(inputSearchGroup,group);
+        Common common = new Common(driver);
+        Common.click(btnNewCustomer);
+        Common.sendKey(inputCompany,companyName);
+        Common.sendKey(inputVAT,VAT);
+        Common.sendKey(inputPhone,sdt);
+        Common.sendKey(inputWebsite,webSite);
+        Common.click(groupDropdown);
+        Common.sendKey(inputSearchGroup,group);
         Thread.sleep(1000);
-        click(By.xpath("//div[@id='bs-select-1']/descendant::span[contains(normalize-space(),'"+group+"')]"));
+        Common.click(By.xpath("//div[@id='bs-select-1']/descendant::span[contains(normalize-space(),'"+group+"')]"));
         driver.findElement(By.xpath("//body")).click();
 
         Actions action = new Actions(driver);
         action.moveToElement(driver.findElement(countryDropdown)).perform();
 
-        click(currencyDropdown);
-        click(currencyOptionUSD);
-        click(defaultLanguageDropdown);
-        click(By.xpath("//span[normalize-space() = '"+language+"']"));
-        sendKey(addressTextArea,address);
-        sendKey(inputCity,city);
-        sendKey(inputState,state);
-        sendKey(inputZipCode,zipCode);
-        click(countryDropdown);
-        click(countryOption);
+        Common.click(currencyDropdown);
+        Common.click(currencyOptionUSD);
+        Common.click(defaultLanguageDropdown);
+        Common.click(By.xpath("//span[normalize-space() = '"+language+"']"));
+        Common.sendKey(addressTextArea,address);
+        Common.sendKey(inputCity,city);
+        Common.sendKey(inputState,state);
+        Common.sendKey(inputZipCode,zipCode);
+        Common.click(countryDropdown);
+        Common.click(countryOption);
     }
     public static void AddCustomerOnlySave()
     {
-        moveToElement(btnOnlySave);
-        click(btnOnlySave);
+        Common common = new Common(driver);
+        Common.moveToElement(btnOnlySave);
+        Common.click(btnOnlySave);
     }
     public static void AddCustomerAndContact(){
-        moveToElement(btnSaveAndCreateContract);
-        click(btnSaveAndCreateContract);
+        Common common = new Common(driver);
+        Common.moveToElement(btnSaveAndCreateContract);
+        Common.click(btnSaveAndCreateContract);
     }
     public static void verifyAddCustomerWithContact(String companyName){
+        Common common = new Common(driver);
         Boolean newContactPopup = driver.findElement(By.xpath("//div[@id='contact']")).isDisplayed();
         Assert.assertTrue(newContactPopup,"Add new contact pop-up is not shown");
-        click(By.xpath("//button[normalize-space() = 'Close']"));
+        Common.click(By.xpath("//button[normalize-space() = 'Close']"));
         Boolean companyNameDisplay = driver.findElement(By.xpath("//span[contains(text(),'"+companyName+"')]")).isDisplayed();
         Assert.assertTrue(companyNameDisplay,"Add customer not successfully");
     }
     public static void verifyRequireFieldWarning(){
+        Common common = new Common(driver);
         Boolean warningDisplay = driver.findElement(companyEmptyWarning).isDisplayed();
         Assert.assertTrue(warningDisplay,"Validate company empty is not shown");
         String warningMessage = driver.findElement(companyEmptyWarning).getText();
-        softAssertEqual(warningMessage,"This field is required.");
+        Common.softAssertEqual(warningMessage,"This field is required.");
     }
     public static void addCustomerAndContacts(String contactFirstName, String contactLastName, String email, String password) throws InterruptedException {
-        sendKey(firstNameContact,contactFirstName);
-        sendKey(lastNameContact,contactLastName);
-        sendKey(contactEmail,email);
-        sendKey(contactPW,password);
-        click(contactSaveBtn);
+        Common common = new Common(driver);
+        Common.sendKey(firstNameContact,contactFirstName);
+        Common.sendKey(lastNameContact,contactLastName);
+        Common.sendKey(contactEmail,email);
+        Common.sendKey(contactPW,password);
+        Common.click(contactSaveBtn);
         Thread.sleep(1000);
     }
     /*public static void verifyAddedContact(String email)
@@ -124,48 +130,50 @@ public class AddCustomerPage extends BasePage{
     }*/
 
     public static void verifyAlertMessage(){
-        boolean isDisplay = isDisplay(alertMessage, 3000);
+        Common common = new Common(driver);
+        boolean isDisplay = Common.isDisplay(alertMessage, 3000);
         System.out.println("Is alert message displayed: "+ isDisplay);
         Assert.assertTrue(isDisplay, "alert message is NOT display");
 
-        String alertContent = getText(alertMessage);
-        softAssertEqual(alertContent, "Customer added successfully.");
+        String alertContent = Common.getText(alertMessage);
+        Common.softAssertEqual(alertContent, "Customer added successfully.");
     }
 
     public static void veriryCustomerDetail(String companyName, String VAT, String sdt, String webSite,String group,String currency, String language,String address, String city, String state, String zipCode){
-        String actualCompanyName = getContribute(inputCompany,"value");
-        softAssertEqual(actualCompanyName,companyName);
+        Common common = new Common(driver);
+        String actualCompanyName = Common.getContribute(inputCompany,"value");
+        Common.softAssertEqual(actualCompanyName,companyName);
 
-        String actualVAT = getContribute(inputVAT, "value");
-        softAssertEqual(actualVAT,VAT);
+        String actualVAT = Common.getContribute(inputVAT, "value");
+        Common.softAssertEqual(actualVAT,VAT);
 
-        String actualPhone = getContribute(inputPhone, "value");
-        softAssertEqual(actualPhone,sdt);
+        String actualPhone = Common.getContribute(inputPhone, "value");
+        Common.softAssertEqual(actualPhone,sdt);
 
-        String actualWebsite = getContribute(inputWebsite, "value");
-        softAssertEqual(actualWebsite,webSite);
+        String actualWebsite = Common.getContribute(inputWebsite, "value");
+        Common.softAssertEqual(actualWebsite,webSite);
 
-        String actualGroup = getContribute(groupDropdown, "title");
-        softAssertEqual(actualGroup,group);
+        String actualGroup = Common.getContribute(groupDropdown, "title");
+        Common.softAssertEqual(actualGroup,group);
 
-        String actualCurrency = getContribute(currencyDropdown, "title");
-        softAssertEqual(actualCurrency,currency);
+        String actualCurrency = Common.getContribute(currencyDropdown, "title");
+        Common.softAssertEqual(actualCurrency,currency);
 
-        String actualLanguage = getContribute(defaultLanguageDropdown, "title");
-        softAssertEqual(actualLanguage,language);
+        String actualLanguage = Common.getContribute(defaultLanguageDropdown, "title");
+        Common.softAssertEqual(actualLanguage,language);
 
 
-        String actualAddress = getContribute(addressTextArea,"value");
-        softAssertEqual(actualAddress,address);
+        String actualAddress = Common.getContribute(addressTextArea,"value");
+        Common.softAssertEqual(actualAddress,address);
 
-        String actualCity = getContribute(inputCity,"value");
-        softAssertEqual(actualCity,city);
+        String actualCity = Common.getContribute(inputCity,"value");
+        Common.softAssertEqual(actualCity,city);
 
-        String actualState = getContribute(inputState,"value");
-        softAssertEqual(actualState,state);
+        String actualState = Common.getContribute(inputState,"value");
+        Common.softAssertEqual(actualState,state);
 
-        String actualZipCode = getContribute(inputZipCode,"value");
-        softAssertEqual(actualZipCode,zipCode);
+        String actualZipCode = Common.getContribute(inputZipCode,"value");
+        Common.softAssertEqual(actualZipCode,zipCode);
     }
 
     public static void verifyContactDetail(String firstName, String lastName, String email){
@@ -173,23 +181,23 @@ public class AddCustomerPage extends BasePage{
         By emailLink = By.xpath("//a[contains(@href,'mailto')]");
         String contactNameText = firstName + " " + lastName;
         try{
-            isDisplay(actualContactName,3000);
+            Common.isDisplay(actualContactName,3000);
         }catch (Exception e){
             System.out.println("Error: "+ e.getMessage());
         }
-        String contactName = getText(actualContactName);
+        String contactName = Common.getText(actualContactName);
         System.out.println("actual contact name: " + contactName);
         System.out.println("expected contact name: " + firstName + " " + lastName);
-        softAssertEqual(contactName,contactNameText);
+        Common.softAssertEqual(contactName,contactNameText);
 
         try{
-            isDisplay(emailLink,2000);
+            Common.isDisplay(emailLink,2000);
         }catch (Exception e){
             System.out.println("Error: "+ e.getMessage());
         }
-        String actualEmail = getText(emailLink);
+        String actualEmail = Common.getText(emailLink);
         System.out.println("actual email: " + actualEmail);
         System.out.println("expected email: " + email);
-        softAssertEqual(actualEmail,email);
+        Common.softAssertEqual(actualEmail,email);
     }
 }

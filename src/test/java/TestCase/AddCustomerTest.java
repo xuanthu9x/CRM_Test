@@ -4,6 +4,7 @@ import Common.BaseTest;
 import Pages.AddCustomerPage;
 import Pages.BasePage;
 import Pages.LoginPage;
+import keywords.Common;
 import org.openqa.selenium.By;
 import org.testng.annotations.Test;
 
@@ -160,7 +161,9 @@ public class AddCustomerTest extends BaseTest {
         AddCustomerPage.verifyAddCustomerSuccessfully(companyName);
         //AddCustomerPage.verifyAddedContact("T_Test8@example.com");
         AddCustomerPage.verifyContactDetail(contactFirstName,contactLastName,contactEmail);
-        driver.findElement(By.xpath("//li[contains(@class, 'customer_tab_profile')]")).click();
+        Common common = new Common(driver);
+        Common.click(By.xpath("//li[contains(@class, 'customer_tab_profile')]"));
+        //driver.findElement(By.xpath("//li[contains(@class, 'customer_tab_profile')]")).click();
         //Thread.sleep(2000);
         AddCustomerPage.veriryCustomerDetail(companyName, VATNumber, phoneNumber, website, group,currency,language, address, city, state, zipCode);
     }

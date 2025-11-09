@@ -1,5 +1,6 @@
 package Pages;
 
+import keywords.Common;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -20,28 +21,31 @@ public class LoginPage extends BasePage{
     }
     public static void LoginTest(String email, String password){
         driver.get(url);
-        sendKey(inputEmail,email);
-        sendKey(inputPassword,password);
-        click(buttonLogin);
+        Common common = new Common(driver);
+        Common.sendKey(inputEmail,email);
+        Common.sendKey(inputPassword,password);
+        Common.click(buttonLogin);
     }
 
     public BasePage Login(String email, String password){
         driver.get(url);
-        sendKey(inputEmail, email);
-        sendKey(inputPassword, password);
-        click(buttonLogin);
+        Common common = new Common(driver);
+        Common.sendKey(inputEmail, email);
+        Common.sendKey(inputPassword, password);
+        Common.click(buttonLogin);
         return new BasePage(driver);
     }
 
     public static void LoginWithRememberMe(String email, String password){
         driver.get(url);
-        sendKey(inputEmail, email);
-        sendKey(inputPassword, password);
+        Common common = new Common(driver);
+        Common.sendKey(inputEmail, email);
+        Common.sendKey(inputPassword, password);
         boolean checkedRememberMe = driver.findElement(checkboxRememberMe).isSelected();
         if (!checkedRememberMe){
-            click(checkboxRememberMe);
+            Common.click(checkboxRememberMe);
         }
-        click(buttonLogin);
+        Common.click(buttonLogin);
     }
 
     public static void verifyLoginSuccess(){
@@ -49,29 +53,34 @@ public class LoginPage extends BasePage{
     }
 
     public static void verifyEmailEmptyWarning(){
-        String emailEmptyWarning = getText(LoginPage.emailEmptyWarning);
-        softAssertEqual(emailEmptyWarning,"The Email Address field is required.");
+        Common common = new Common(driver);
+        String emailEmptyWarning = Common.getText(LoginPage.emailEmptyWarning);
+        Common.softAssertEqual(emailEmptyWarning,"The Email Address field is required.");
     }
 
     public  static void verifyPasswordEmptyWarning(){
-        String passwordEmptyWarning = getText(LoginPage.passwordEmptyWarning);
-        softAssertEqual(passwordEmptyWarning, "The Password field is required.");
+        Common common = new Common(driver);
+        String passwordEmptyWarning = Common.getText(LoginPage.passwordEmptyWarning);
+        Common.softAssertEqual(passwordEmptyWarning, "The Password field is required.");
     }
 
     public static void verifyEmailWrong(){
-        String emailWrongWarning = getText(LoginPage.email_pwWrongWarning);
-        softAssertEqual(emailWrongWarning,"Invalid email or password");
+        Common common = new Common(driver);
+        String emailWrongWarning = Common.getText(LoginPage.email_pwWrongWarning);
+        Common.softAssertEqual(emailWrongWarning,"Invalid email or password");
     }
 
     public static void verifyPasswordWrong(){
-        String passwordWrongWarning = getText(LoginPage.email_pwWrongWarning);
-        softAssertEqual(passwordWrongWarning,"Invalid email or password");
+        Common common = new Common(driver);
+        String passwordWrongWarning = Common.getText(LoginPage.email_pwWrongWarning);
+        Common.softAssertEqual(passwordWrongWarning,"Invalid email or password");
     }
 
     public static void verifyEmailFormat(){
+        Common common = new Common(driver);
         JavascriptExecutor js = (JavascriptExecutor) driver;
         String actualMessage = (String) js.executeScript(
                 "return arguments[0].validationMessage;", driver.findElement(LoginPage.inputEmail));
-        softAssertEqual(actualMessage, "Please include an '@' in the email address. 'abc' is missing an '@'.");
+        Common.softAssertEqual(actualMessage, "Please include an '@' in the email address. 'abc' is missing an '@'.");
     }
 }
