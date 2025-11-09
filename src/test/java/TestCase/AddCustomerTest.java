@@ -159,12 +159,9 @@ public class AddCustomerTest extends BaseTest {
         String contactPW="123456";
         AddCustomerPage.addCustomerAndContacts(contactFirstName,contactLastName,contactEmail,contactPW);
         AddCustomerPage.verifyAddCustomerSuccessfully(companyName);
-        //AddCustomerPage.verifyAddedContact("T_Test8@example.com");
         AddCustomerPage.verifyContactDetail(contactFirstName,contactLastName,contactEmail);
         Common common = new Common(driver);
         Common.click(By.xpath("//li[contains(@class, 'customer_tab_profile')]"));
-        //driver.findElement(By.xpath("//li[contains(@class, 'customer_tab_profile')]")).click();
-        //Thread.sleep(2000);
         AddCustomerPage.veriryCustomerDetail(companyName, VATNumber, phoneNumber, website, group,currency,language, address, city, state, zipCode);
     }
 }
