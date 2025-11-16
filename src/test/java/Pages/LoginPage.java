@@ -20,16 +20,17 @@ public class LoginPage extends BasePage{
         super(driver);
     }
     public static void LoginTest(String email, String password){
-        driver.get(url);
+        System.out.println("Login");
         Common common = new Common(driver);
+        Common.openUrl(url);
         Common.sendKey(inputEmail,email);
         Common.sendKey(inputPassword,password);
         Common.click(buttonLogin);
     }
 
     public BasePage Login(String email, String password){
-        driver.get(url);
         Common common = new Common(driver);
+        Common.openUrl(url);
         Common.sendKey(inputEmail, email);
         Common.sendKey(inputPassword, password);
         Common.click(buttonLogin);
@@ -37,8 +38,8 @@ public class LoginPage extends BasePage{
     }
 
     public static void LoginWithRememberMe(String email, String password){
-        driver.get(url);
         Common common = new Common(driver);
+        Common.openUrl(url);
         Common.sendKey(inputEmail, email);
         Common.sendKey(inputPassword, password);
         boolean checkedRememberMe = driver.findElement(checkboxRememberMe).isSelected();
@@ -46,9 +47,11 @@ public class LoginPage extends BasePage{
             Common.click(checkboxRememberMe);
         }
         Common.click(buttonLogin);
+        Common.waitForPageLoaded();
     }
 
     public static void verifyLoginSuccess(){
+        Common common = new Common(driver);
         Assert.assertTrue(driver.findElement(By.xpath("//span[normalize-space()='Dashboard']")).isDisplayed());
     }
 

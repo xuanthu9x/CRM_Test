@@ -91,6 +91,8 @@ public class BasePage {
 
     public BasePage(WebDriver driver){
         this.driver = driver;
+        Common common = new Common(driver);
+        Common.waitForPageLoaded();
     }
 
     private static List<String> getMenuList(){
@@ -176,16 +178,21 @@ public class BasePage {
     }
 
     public static void navigateCustomerPage(){
+        System.out.println("Navigate to Customer page");
         Common common = new Common(driver);
         Common.click(customersMenu);
+        Common.waitForPageLoaded();
     }
-    public AddCustomerPage CustomerPage(){
+    public AddCustomerPage CustomerPage() {
         Common common = new Common(driver);
         Common.click(customersMenu);
+        Common.waitForPageLoaded();
         return new AddCustomerPage(driver);
     }
     public static void verifyNavigateCustomePage(){
         navigateCustomerPage();
+        Common common = new Common(driver);
+        Common.waitForPageLoaded();
         AddCustomerPage customerPage = new AddCustomerPage(driver);
         Assert.assertTrue(driver.findElement(AddCustomerPage.customerSummaryTitle).isDisplayed());
     }

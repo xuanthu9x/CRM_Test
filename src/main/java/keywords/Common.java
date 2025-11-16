@@ -16,6 +16,11 @@ public class Common {
     public Common (WebDriver driver){
         this.driver = driver;
     }
+    public static void openUrl(String url){
+        driver.get(url);
+        System.out.println("Open URL: " + url);
+        waitForPageLoaded();
+    }
 
     public static void logConsole(String message) {
         // Có thể thêm timestamp hoặc cấp độ log ở đây trước khi in
@@ -57,20 +62,25 @@ public class Common {
         //WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         //WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(by));
         waitForElementVisible(by).sendKeys(message);
+        System.out.println("Input text '" + message + "' into element: " + by.toString());
     }
 
     public static void click(By by){
         waitForElementClickable(by).click();
+        System.out.println("Click on element: " + by.toString());
     }
 
     public static void clearText(By by){
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(by));
         element.clear();
+        System.out.println("Clear text in element: " + by.toString());
         //driver.findElement(by).clear();
     }
 
     public static String getText(By by){
+        System.out.println("Get text from element: " + by.toString());
+        System.out.println("Text value: " + waitForElementVisible(by).getText());
         return waitForElementVisible(by).getText();
     }
     public  static void softAssertEqual(String actual, String expected){
@@ -86,6 +96,7 @@ public class Common {
         WebElement element = waitForElementVisible(by);
         Actions actions = new Actions(driver);
         actions.moveToElement(element).perform();
+        System.out.println("Move to element: " + by.toString());
     }
 
     public static boolean isDisplay (By by, int timeoutInSeconds){
@@ -95,15 +106,18 @@ public class Common {
         } catch (Exception e) {
             isDisplayed = false;
         }
+        System.out.println("Element " + by.toString() + " is displayed: " + isDisplayed);
         return isDisplayed;
     }
 
     public static String getContribute(By by, String contribute){
+        System.out.println("Get contribute '" + contribute + "' from element: " + by.toString());
+        System.out.println("Contribute value: " + waitForElementVisible(by).getAttribute(contribute));
         return waitForElementVisible(by).getAttribute(contribute);
     }
 
     //Chờ đợi trang load xong mới thao tác
-    public void waitForPageLoaded() {
+    public static void waitForPageLoaded() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30), Duration.ofMillis(500));
         JavascriptExecutor js = (JavascriptExecutor) driver;
 
