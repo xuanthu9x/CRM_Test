@@ -57,15 +57,21 @@ public class Common {
             throw new TimeoutException("Element not visible after 5 seconds: " + by.toString(), error);
         }
     }
-
+    public static void highLightElement(By by) {
+        WebElement element = waitForElementVisible(by);
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].style.border='3px solid red'", element);
+    }
     public static void sendKey(By by, String message) {
         //WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         //WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+        highLightElement(by);
         waitForElementVisible(by).sendKeys(message);
         System.out.println("Input text '" + message + "' into element: " + by.toString());
     }
 
     public static void click(By by){
+        highLightElement(by);
         waitForElementClickable(by).click();
         System.out.println("Click on element: " + by.toString());
     }
@@ -79,6 +85,7 @@ public class Common {
     }
 
     public static String getText(By by){
+        highLightElement(by);
         System.out.println("Get text from element: " + by.toString());
         System.out.println("Text value: " + waitForElementVisible(by).getText());
         return waitForElementVisible(by).getText();
@@ -96,7 +103,36 @@ public class Common {
         WebElement element = waitForElementVisible(by);
         Actions actions = new Actions(driver);
         actions.moveToElement(element).perform();
+        highLightElement(by);
         System.out.println("Move to element: " + by.toString());
+    }
+
+    public static void hoverElement(By by){
+        WebElement element = waitForElementVisible(by);
+        Actions actions = new Actions(driver);
+        actions.moveToElement(element).perform();
+        highLightElement(by);
+        System.out.println("Hover on element: " + by.toString());
+    }
+
+    public static void draftAndDrop(By fromElement, By toElement){
+        WebElement sourceElement = waitForElementVisible(fromElement);
+        WebElement targetElement = waitForElementVisible(toElement);
+        highLightElement(fromElement);
+        highLightElement(toElement);
+        Actions actions = new Actions(driver);
+        actions.dragAndDrop(sourceElement, targetElement).perform();
+        System.out.println("Drag element: " + fromElement.toString() + " and drop to element: " + toElement.toString());
+    }
+
+    public static void clickAndMoveToElement(By fromElement, By toElement){
+        WebElement sourceElement = waitForElementVisible(fromElement);
+        WebElement targetElement = waitForElementVisible(toElement);
+        highLightElement(fromElement);
+        highLightElement(toElement);
+        Actions actions = new Actions(driver);
+        actions.clickAndHold(sourceElement).moveToElement(targetElement).release().perform();
+        System.out.println("Click and move element: " + fromElement.toString() + " to element: " + toElement.toString());
     }
 
     public static boolean isDisplay (By by, int timeoutInSeconds){
@@ -144,4 +180,10 @@ public class Common {
             }
         }
     }
+
+    public static void pressEnterKey(By by){
+        waitForElementVisible(by).sendKeys(Keys.ENTER);
+        System.out.println("Press Enter key on element: " + by.toString());
+    }
+
 }

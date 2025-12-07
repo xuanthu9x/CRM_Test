@@ -47,11 +47,11 @@ public class LoginPage extends BasePage{
             Common.click(checkboxRememberMe);
         }
         Common.click(buttonLogin);
-        Common.waitForPageLoaded();
     }
 
     public static void verifyLoginSuccess(){
         Common common = new Common(driver);
+        Common.waitForPageLoaded();
         Assert.assertTrue(driver.findElement(By.xpath("//span[normalize-space()='Dashboard']")).isDisplayed());
     }
 

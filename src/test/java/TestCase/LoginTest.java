@@ -2,14 +2,17 @@ package TestCase;
 
 import Common.BaseTest;
 import Pages.LoginPage;
+import org.testng.annotations.Optional;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 public class LoginTest extends BaseTest {
     @Test (priority = 1)
-    public void LoginSuccess() throws InterruptedException {
+    @Parameters ({"email","password"})
+    public void LoginSuccess(@Optional("admin@example.com") String email,@Optional("123456") String password) throws InterruptedException {
         System.out.println("Test case: Login with valid email and password");
         LoginPage login = new LoginPage(driver);
-        LoginPage.LoginWithRememberMe("admin@example.com", "123456");
+        LoginPage.LoginWithRememberMe(email, password);
         LoginPage.verifyLoginSuccess();
     }
 

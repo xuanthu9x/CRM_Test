@@ -1,9 +1,39 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
 <suite name="SuiteRunByClass" verbose="1">
-    <test name="FirstTest">
+    <test name="ChromeTest">
+        <parameter name="email" value="admin@example.com"/>
+        <parameter name="password" value="123456"/>
+        <parameter name="browser" value="chrome"/>
         <classes>
             <class name="TestCase.LoginTest"/>
+            <methods>
+                <include name="LoginSuccess"/>
+            </methods>
+        </classes>
+    </test>
+
+    <test name="EdgeTest">
+        <parameter name="email" value="admin@example.com"/>
+        <parameter name="password" value="123456"/>
+        <parameter name="browser" value="firefox"/>
+        <classes>
+            <class name="TestCase.LoginTest"/>
+            <methods>
+                <include name="LoginSuccess"/>
+            </methods>
+        </classes>
+    </test>
+
+    <test name="FirefoxTest">
+        <parameter name="email" value="admin@example.com"/>
+        <parameter name="password" value="123456"/>
+        <parameter name="browser" value="firefox"/>
+        <classes>
+            <class name="TestCase.LoginTest"/>
+            <methods>
+                <include name="LoginSuccess"/>
+            </methods>
         </classes>
     </test>
 </suite>
