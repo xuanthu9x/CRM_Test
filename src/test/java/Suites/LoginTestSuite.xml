@@ -1,27 +1,25 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
-<suite name="SuiteRunByClass" verbose="1">
+<suite name="SuiteRunByClass" verbose="1" >
     <test name="ChromeTest">
         <parameter name="email" value="admin@example.com"/>
         <parameter name="password" value="123456"/>
         <parameter name="browser" value="chrome"/>
         <classes>
             <class name="TestCase.LoginTest"/>
-            <methods>
-                <include name="LoginSuccess"/>
-            </methods>
         </classes>
     </test>
 
-    <test name="EdgeTest">
+    <!--<test name="EdgeTest">
         <parameter name="email" value="admin@example.com"/>
         <parameter name="password" value="123456"/>
-        <parameter name="browser" value="firefox"/>
+        <parameter name="browser" value="edge"/>
         <classes>
-            <class name="TestCase.LoginTest"/>
-            <methods>
-                <include name="LoginSuccess"/>
-            </methods>
+            <class name="TestCase.LoginTest">
+                <methods>
+                    <include name="LoginSuccess"/>
+                </methods>
+            </class>
         </classes>
     </test>
 
@@ -30,10 +28,11 @@
         <parameter name="password" value="123456"/>
         <parameter name="browser" value="firefox"/>
         <classes>
-            <class name="TestCase.LoginTest"/>
-            <methods>
-                <include name="LoginSuccess"/>
-            </methods>
+            <class name="TestCase.LoginTest">
+                <methods>
+                    <include name="LoginSuccess"/>
+                </methods>
+            </class>
         </classes>
-    </test>
+    </test>-->
 </suite>

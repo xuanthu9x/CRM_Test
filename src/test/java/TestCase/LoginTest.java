@@ -12,7 +12,8 @@ public class LoginTest extends BaseTest {
     public void LoginSuccess(@Optional("admin@example.com") String email,@Optional("123456") String password) throws InterruptedException {
         System.out.println("Test case: Login with valid email and password");
         LoginPage login = new LoginPage(driver);
-        LoginPage.LoginWithRememberMe(email, password);
+        //LoginPage.LoginWithRememberMe(email, password);
+        LoginPage.LoginTest(); // gọi hàm dùng email, password từ file properties
         LoginPage.verifyLoginSuccess();
     }
 
@@ -21,6 +22,7 @@ public class LoginTest extends BaseTest {
         System.out.println("Test case: Login with empty email");
         LoginPage login = new LoginPage(driver);
         LoginPage.LoginTest("", "123456");
+        //LoginPage.LoginTest();
         LoginPage.verifyEmailEmptyWarning();
 
     }

@@ -27,6 +27,15 @@ public class LoginPage extends BasePage{
         Common.sendKey(inputPassword,password);
         Common.click(buttonLogin);
     }
+    // Hàm đăng nhập sử dụng email và password từ file properties
+    public static void LoginTest(){
+        System.out.println("Login");
+        Common common = new Common(driver);
+        Common.openUrl(url);
+        Common.sendKey(inputEmail, helper.PropertiesHelper.getValue("email"));
+        Common.sendKey(inputPassword, helper.PropertiesHelper.getValue("password"));
+        Common.click(buttonLogin);
+    }
 
     public BasePage Login(String email, String password){
         Common common = new Common(driver);

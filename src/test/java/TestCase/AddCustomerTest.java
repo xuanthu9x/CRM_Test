@@ -1,5 +1,3 @@
-package TestCase;
-
 import Common.BaseTest;
 import Pages.AddCustomerPage;
 import Pages.BasePage;

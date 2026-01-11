@@ -3,7 +3,7 @@
 <suite name="SuiteRunByClass" verbose="1">
     <test name="FirstTest">
         <classes>
-            <class name="TestCase.AddCustomerTest"/>
+            <class name="AddCustomerTest"/>
         </classes>
     </test>
 </suite>

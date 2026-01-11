@@ -1,23 +1,21 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by Fernflower decompiler)
+//
+
 package Pages;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import keywords.Common;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.asserts.SoftAssert;
-
-import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class BasePage {
     public static WebDriver driver;
-
     private static By salesSubMenuList = By.xpath("//li[@class = 'menu-item-sales active']/ul/li");
     private static By listMenu = By.xpath("//ul[@id='side-menu']/li[contains(@class,'menu-item')]");
     private static By dashboardMenu = By.xpath("//span[normalize-space()='Dashboard']");
@@ -51,150 +49,122 @@ public class BasePage {
     private static By reportsLeadsMenu = By.xpath("//span[@class = 'sub-menu-text' and normalize-space()='Leads']");
     private static By reportsTimesheetsMenu = By.xpath("//span[@class = 'sub-menu-text' and normalize-space()='Timesheets overview']");
     private static By reportsKnowledge_base_articlesMenu = By.xpath("//span[@class = 'sub-menu-text' and normalize-space()='KB Articles']");
-    private static List<String> expectedMenuList = Arrays.asList(
-            "Dashboard",
-            "Customers",
-            "Sales",
-            "Subscriptions",
-            "Expenses",
-            "Contracts",
-            "Projects",
-            "Tasks",
-            "Support",
-            "Leads",
-            "Estimate Request",
-            "Knowledge Base",
-            "Utilities",
-            "Reports"
-    );
-    private static List<String> expectedSalesSubMenuList = Arrays.asList(
-            "Proposals",
-            "Estimates",
-            "Invoices",
-            "Payments",
-            "Credit Notes",
-            "Items"
-    );
-    private static List<String> expectedUtilitesSubMenuList = Arrays.asList(
-            "Media",
-            "Bulk PDF Export",
-            "Calendar"
-    );
-    private static List<String> expectedReportsSubMenuList = Arrays.asList(
-            "Sales",
-            "Expenses",
-            "Expenses vs Income",
-            "Leads",
-            "Timesheets overview",
-            "KB Articles"
-    );
+    private static List<String> expectedMenuList = Arrays.asList("Dashboard", "Customers", "Sales", "Subscriptions", "Expenses", "Contracts", "Projects", "Tasks", "Support", "Leads", "Estimate Request", "Knowledge Base", "Utilities", "Reports");
+    private static List<String> expectedSalesSubMenuList = Arrays.asList("Proposals", "Estimates", "Invoices", "Payments", "Credit Notes", "Items");
+    private static List<String> expectedUtilitesSubMenuList = Arrays.asList("Media", "Bulk PDF Export", "Calendar");
+    private static List<String> expectedReportsSubMenuList = Arrays.asList("Sales", "Expenses", "Expenses vs Income", "Leads", "Timesheets overview", "KB Articles");
 
-    public BasePage(WebDriver driver){
-        this.driver = driver;
-        Common common = new Common(driver);
+    public BasePage(WebDriver driver) {
+        BasePage.driver = driver;
+        new Common(driver);
         Common.waitForPageLoaded();
     }
 
-    private static List<String> getMenuList(){
+    private static List<String> getMenuList() {
         List<WebElement> menuList = driver.findElements(listMenu);
-        List<String> menuItems = new ArrayList<>();
-        if(menuList.size()>0) {
-            for(WebElement item : menuList){
+        List<String> menuItems = new ArrayList();
+        if (menuList.size() > 0) {
+            for(WebElement item : menuList) {
                 menuItems.add(item.getText());
             }
-        }else{
+        } else {
             System.out.println("Can not get menu list");
         }
+
         return menuItems;
     }
-    private static List<String> getSaleSubMenuList(){
+
+    private static List<String> getSaleSubMenuList() {
         List<WebElement> menuList = driver.findElements(salesSubMenuList);
-        List<String> subMenuList = new ArrayList<>();
-        if(menuList.size()>0) {
-            for(WebElement item : menuList){
+        List<String> subMenuList = new ArrayList();
+        if (menuList.size() > 0) {
+            for(WebElement item : menuList) {
                 subMenuList.add(item.getText());
             }
-        }else{
+        } else {
             System.out.println("Can not get menu list");
         }
+
         return subMenuList;
     }
-    private static List<String> getUtilitiesSubMenuList(){
+
+    private static List<String> getUtilitiesSubMenuList() {
         List<WebElement> menuList = driver.findElements(utilitiesSubMenu);
-        List<String> subMenuList = new ArrayList<>();
-        if(menuList.size()>0) {
-            for(WebElement item : menuList){
+        List<String> subMenuList = new ArrayList();
+        if (menuList.size() > 0) {
+            for(WebElement item : menuList) {
                 subMenuList.add(item.getText());
             }
-        }else{
+        } else {
             System.out.println("Can not get menu list");
         }
+
         return subMenuList;
     }
-    private static List<String> getReportsSubMenuList(){
+
+    private static List<String> getReportsSubMenuList() {
         List<WebElement> menuList = driver.findElements(reportsSubMenuList);
-        List<String> subMenuList = new ArrayList<>();
-        if(menuList.size()>0) {
-            for(WebElement item : menuList){
+        List<String> subMenuList = new ArrayList();
+        if (menuList.size() > 0) {
+            for(WebElement item : menuList) {
                 subMenuList.add(item.getText());
             }
-        }else{
+        } else {
             System.out.println("Can not get menu list");
         }
+
         return subMenuList;
     }
-
-
 
     public static void checkMenuList() {
         List<WebElement> menuList = driver.findElements(listMenu);
-        List<String> menuItemList = BasePage.getMenuList();
+        List<String> menuItemList = getMenuList();
         Assert.assertEquals(menuItemList, expectedMenuList, " Menu list does not match!");
-
-
     }
+
     public static void checkSaleSubMenu() throws InterruptedException {
-        Common common = new Common(driver);
+        new Common(driver);
         Common.click(salesMenu);
-        Thread.sleep(1000);
-        List<String> saleSubMenuList = BasePage.getSaleSubMenuList();
+        Thread.sleep(1000L);
+        List<String> saleSubMenuList = getSaleSubMenuList();
         Assert.assertEquals(saleSubMenuList, expectedSalesSubMenuList, " Sale sub menu list does not match!");
     }
 
     public static void checkUtilitiesSubMenu() throws InterruptedException {
-        Common common = new Common(driver);
+        new Common(driver);
         Common.click(utilitiesMenu);
-        Thread.sleep(1000);
-        List<String> unitiliesSubMenuList = BasePage.getUtilitiesSubMenuList();
+        Thread.sleep(1000L);
+        List<String> unitiliesSubMenuList = getUtilitiesSubMenuList();
         Assert.assertEquals(unitiliesSubMenuList, expectedUtilitesSubMenuList, " Utilities sub menu list does not match!");
     }
 
     public static void checkReportsSubMenu() throws InterruptedException {
-        Common common = new Common(driver);
+        new Common(driver);
         Common.click(reportMenu);
-        Thread.sleep(1000);
-        List<String> reportsSubMenuList = BasePage.getReportsSubMenuList();
+        Thread.sleep(1000L);
+        List<String> reportsSubMenuList = getReportsSubMenuList();
         Assert.assertEquals(reportsSubMenuList, expectedReportsSubMenuList, " Reports sub menu list does not match!");
     }
 
-    public static void navigateCustomerPage(){
+    public static void navigateCustomerPage() {
         System.out.println("Navigate to Customer page");
-        Common common = new Common(driver);
+        new Common(driver);
         Common.click(customersMenu);
         Common.waitForPageLoaded();
     }
-    public AddCustomerPage CustomerPage() {
-        Common common = new Common(driver);
+
+    public Pages.AddCustomerPage CustomerPage() {
+        new Common(driver);
         Common.click(customersMenu);
         Common.waitForPageLoaded();
         return new AddCustomerPage(driver);
     }
-    public static void verifyNavigateCustomePage(){
+
+    public static void verifyNavigateCustomePage() {
         navigateCustomerPage();
-        Common common = new Common(driver);
+        new Common(driver);
         Common.waitForPageLoaded();
-        AddCustomerPage customerPage = new AddCustomerPage(driver);
+        new AddCustomerPage(driver);
         Assert.assertTrue(driver.findElement(AddCustomerPage.customerSummaryTitle).isDisplayed());
     }
-
 }

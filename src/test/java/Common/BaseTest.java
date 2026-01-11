@@ -1,25 +1,40 @@
 package Common;
 
+import helper.PropertiesHelper;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Optional;
-import org.testng.annotations.Parameters;
+import org.testng.annotations.*;
 
 import java.time.Duration;
 
 public class BaseTest {
     public WebDriver driver;
+
+    @BeforeSuite
+    public void setupBeforeSuite(){
+        helper.PropertiesHelper.loadAllFiles();
+    }
     @BeforeMethod
     @Parameters({"browser"})
-    public void createDriver( String browser){
+    public void createDriver(@Optional("chrome") String browser) {
+        if(PropertiesHelper.getValue("browserName") != null){
+            browser = PropertiesHelper.getValue("browserName");
+        }else{
+            browser = browser;
+        }
        setupDriver(browser);
     }
-    public WebDriver setupDriver(@Optional("edge") String browserName){
+
+    public WebDriver setupDriver(@Optional("chrome") String browserName){
+        if(PropertiesHelper.getValue("browserName") != null){
+            browserName = PropertiesHelper.getValue("browserName");
+        }else{
+            browserName = browserName;
+        }
+
         switch (browserName.trim().toLowerCase()){
             case "chrome":
                 driver = initChromeDriver();
@@ -57,6 +72,7 @@ public class BaseTest {
         driver.manage().window().maximize();
         return driver;
     }
+
     @AfterMethod
     public void closeDriver(){
         if(driver!=null){
