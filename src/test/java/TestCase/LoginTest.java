@@ -2,6 +2,7 @@ package TestCase;
 
 import Common.BaseTest;
 import Pages.LoginPage;
+import org.openqa.selenium.Cookie;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
@@ -55,5 +56,18 @@ public class LoginTest extends BaseTest {
         LoginPage login = new LoginPage(driver);
         LoginPage.LoginTest("abc", "123456");
         LoginPage.verifyEmailFormat();
+    }
+    @Test (priority = 7)
+    public void DemoLoginWithDataInExcel(){
+        LoginPage login = new LoginPage(driver);
+        String email = loginExcel.getCellData("Email",1);
+        String password = loginExcel.getCellData("Password",1);
+        LoginPage.LoginTest(email,password);
+        Cookie session = driver.manage().getCookieNamed("sp_session");
+        System.out.println("Cookie name: " + session.getName() + ", Cookie value: " + session.getValue());
+        loginExcel.setExcelFile("src/test/resources/DataTest/~$Login.xlsx","Login");
+        loginExcel.setCellData(session.getName(), "SessionName",1);
+        loginExcel.setCellData(session.getValue(), "SessionValue",1);
+
     }
 }

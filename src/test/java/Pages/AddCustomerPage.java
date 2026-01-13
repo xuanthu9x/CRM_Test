@@ -53,15 +53,7 @@ public class AddCustomerPage extends BasePage{
         Assert.assertTrue(companyNameDisplay,"Add customer not successfully");
     }
 
-  /*  public static void InputAddCustomerWithOnlyRequireField(String companyName1){
-        click(btnNewCustomer);
-        click(menuCustomer);
-        click(btnNewCustomer);
-        String companyName = companyName1;
-        sendKey(inputCompany,companyName);
-    }*/
-
-    public static void InputFullCustomerInfor(String companyName, String VAT, String sdt, String webSite, String group,String language, String address, String city, String state, String zipCode) throws InterruptedException {
+    public static void InputFullCustomerInfor(String companyName, String VAT, String sdt, String webSite, String group,String language, String address, String city, String state, String zipCode, String country) throws InterruptedException {
         Common common = new Common(driver);
         Common.click(btnNewCustomer);
         Common.sendKey(inputCompany,companyName);
@@ -86,7 +78,13 @@ public class AddCustomerPage extends BasePage{
         Common.sendKey(inputState,state);
         Common.sendKey(inputZipCode,zipCode);
         Common.click(countryDropdown);
+        countryOption = By.xpath("//div[@id='bs-select-4']/descendant::span[contains(text(),'" + country + "')]");
         Common.click(countryOption);
+    }
+    public static void InputAddCustomerWithOnlyRequireField(String companyName){
+        Common common = new Common(driver);
+        Common.click(btnNewCustomer);
+        Common.sendKey(inputCompany,companyName);
     }
     public static void AddCustomerOnlySave()
     {

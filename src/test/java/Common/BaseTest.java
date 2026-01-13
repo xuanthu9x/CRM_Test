@@ -1,5 +1,6 @@
 package Common;
 
+import helper.ExcelHelper;
 import helper.PropertiesHelper;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
@@ -12,10 +13,25 @@ import java.time.Duration;
 
 public class BaseTest {
     public WebDriver driver;
+    protected ExcelHelper customerExcel;
+    protected ExcelHelper contactExcel;
+    protected ExcelHelper loginExcel;
 
     @BeforeSuite
     public void setupBeforeSuite(){
         helper.PropertiesHelper.loadAllFiles();
+    }
+
+    @BeforeClass
+    public void setupBeforeClass(){
+        customerExcel = new ExcelHelper();
+        customerExcel.setExcelFile("src/test/resources/DataTest/Customers.xlsx", "AddCustomer");
+
+        contactExcel = new ExcelHelper();
+        contactExcel.setExcelFile("src/test/resources/DataTest/Customers.xlsx", "Contact");
+
+        loginExcel = new ExcelHelper();
+        loginExcel.setExcelFile("src/test/resources/DataTest/Login.xlsx", "Login");
     }
     @BeforeMethod
     @Parameters({"browser"})

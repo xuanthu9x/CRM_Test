@@ -153,7 +153,7 @@ public class BasePage {
         Common.waitForPageLoaded();
     }
 
-    public Pages.AddCustomerPage CustomerPage() {
+    public AddCustomerPage CustomerPage() {
         new Common(driver);
         Common.click(customersMenu);
         Common.waitForPageLoaded();
