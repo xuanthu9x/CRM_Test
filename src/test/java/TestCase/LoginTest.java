@@ -87,7 +87,7 @@ public class LoginTest extends BaseTest {
         LoginPage.verifyLoginSuccess();
     }
 
-    @Test(dataProvider = "data_provider_login", dataProviderClass = DataProviderFactory.class)
+    @Test(dataProvider = "data_provider_login", dataProviderClass = DataProviderLogin.class)
     public void LoginSuccessDemoDataProvideNotSameClass(String email, String password) throws InterruptedException {
         //System.out.println("Test case: Login with valid email and password");
         LoginPage login = new LoginPage(driver);
@@ -96,7 +96,7 @@ public class LoginTest extends BaseTest {
         LoginPage.verifyLoginSuccess();
     }
 
-    @Test(dataProvider = "data_provider_login_excel", dataProviderClass = DataProviderFactory.class)
+    @Test(dataProvider = "data_provider_login_excel", dataProviderClass = DataProviderLogin.class)
     public void testLoginFromDataProviderExcel(String email, String password) {
         LoginPage login = new LoginPage(driver);
         LoginPage.LoginWithRememberMe(email, password);
@@ -104,7 +104,7 @@ public class LoginTest extends BaseTest {
         LoginPage.verifyLoginSuccess();
     }
 
-    @Test(priority = 1, dataProvider = "data_provider_login_excel_hashtable", dataProviderClass = DataProviderFactory.class)
+    @Test(priority = 1, dataProvider = "data_provider_login_excel_hashtable", dataProviderClass = DataProviderLogin.class)
     public void testLoginFromDataProviderExcelHashtable(Hashtable< String, String > data) {
         LoginPage login = new LoginPage(driver);
         LoginPage.LoginWithRememberMe(data.get("Email"), data.get("Password"));
@@ -113,7 +113,7 @@ public class LoginTest extends BaseTest {
     }
 
     // Sử dụng DataProvider với các dòng cụ thể (1, 3, 4)
-    @Test(dataProvider = "data_provider_login_excel_specific_rows", dataProviderClass = DataProviderFactory.class)
+    @Test(dataProvider = "data_provider_login_excel_specific_rows", dataProviderClass = DataProviderLogin.class)
     public void testLoginWithSpecificRows(String email, String password) {
         System.out.println("Email: " + email);
         System.out.println("Password: " + password);
@@ -125,7 +125,7 @@ public class LoginTest extends BaseTest {
     }
 
     // Sử dụng DataProvider với các dòng cụ thể dạng Hashtable
-    @Test(dataProvider = "data_provider_login_excel_specific_rows_hashtable", dataProviderClass = DataProviderFactory.class)
+    @Test(dataProvider = "data_provider_login_excel_specific_rows_hashtable", dataProviderClass = DataProviderLogin.class)
     public void testLoginWithSpecificRowsHashtable(Hashtable < String, String > data) {
         String email = data.get("Email");
         String password = data.get("Password");

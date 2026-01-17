@@ -53,38 +53,55 @@ public class AddCustomerPage extends BasePage{
         Assert.assertTrue(companyNameDisplay,"Add customer not successfully");
     }
 
-    public static void InputFullCustomerInfor(String companyName, String VAT, String sdt, String webSite, String group,String language, String address, String city, String state, String zipCode, String country) throws InterruptedException {
+    public static By getOptionGroup(String group){
+        By GroupOption = By.xpath("//div[@id='bs-select-1']/descendant::span[contains(normalize-space(),'"+group+"')]");
+        return GroupOption;
+    }
+    public static By getOptionLanguage(String language){
+        defaultLanguageEnglish = By.xpath("//span[normalize-space() = '"+language+"']");
+        return defaultLanguageEnglish;
+    }
+    public static By getOptionCurrency(String currency){
+        By currencyOption=By.xpath("//div[@id='bs-select-2']/descendant::span[contains(text(),'" + currency + "')]");
+        return currencyOption;
+    }
+    public static By getOptionCountry(String country){
+        countryOption = By.xpath("//div[@id='bs-select-4']/descendant::span[contains(text(),'" + country + "')]");
+        return countryOption;
+    }
+
+    public static void InputFullCustomerInfor(String companyName, String VAT, String sdt, String webSite, String group,String currency, String language, String address, String city, String state, String zipCode, String country) throws InterruptedException {
         Common common = new Common(driver);
         Common.click(btnNewCustomer);
         Common.sendKey(inputCompany,companyName);
-        Common.sendKey(inputVAT,VAT);
-        Common.sendKey(inputPhone,sdt);
-        Common.sendKey(inputWebsite,webSite);
-        Common.click(groupDropdown);
-        Common.sendKey(inputSearchGroup,group);
-        Thread.sleep(1000);
-        Common.click(By.xpath("//div[@id='bs-select-1']/descendant::span[contains(normalize-space(),'"+group+"')]"));
-        driver.findElement(By.xpath("//body")).click();
-
+        if(VAT != null && !VAT.equals("")){ Common.sendKey(inputVAT,VAT);}
+        if(sdt != null && !sdt.equals("")){ Common.sendKey(inputPhone,sdt);}
+        if(webSite != null && !webSite.equals("")){ Common.sendKey(inputWebsite,webSite);}
+        if(group != null && !group.equals("")){
+            Common.click(groupDropdown);
+            Common.sendKey(inputSearchGroup,group);
+            Thread.sleep(1000);
+            Common.click(getOptionGroup(group));
+            driver.findElement(By.xpath("//body")).click();
+        }
         Actions action = new Actions(driver);
         action.moveToElement(driver.findElement(countryDropdown)).perform();
-
-        Common.click(currencyDropdown);
-        Common.click(currencyOptionUSD);
-        Common.click(defaultLanguageDropdown);
-        Common.click(By.xpath("//span[normalize-space() = '"+language+"']"));
-        Common.sendKey(addressTextArea,address);
-        Common.sendKey(inputCity,city);
-        Common.sendKey(inputState,state);
-        Common.sendKey(inputZipCode,zipCode);
-        Common.click(countryDropdown);
-        countryOption = By.xpath("//div[@id='bs-select-4']/descendant::span[contains(text(),'" + country + "')]");
-        Common.click(countryOption);
-    }
-    public static void InputAddCustomerWithOnlyRequireField(String companyName){
-        Common common = new Common(driver);
-        Common.click(btnNewCustomer);
-        Common.sendKey(inputCompany,companyName);
+        if(currency != null && !currency.equals("")){
+            Common.click(currencyDropdown);
+            Common.click(getOptionCurrency(currency));
+        }
+        if(language != null && !language.equals("")){
+            Common.click(defaultLanguageDropdown);
+            Common.click(getOptionLanguage(language));
+        }
+        if(address != null && !address.equals("")){  Common.sendKey(addressTextArea,address);}
+        if(city != null && !city.equals("")) { Common.sendKey(inputCity,city);}
+        if(state != null && !state.equals("")){ Common.sendKey(inputState,state);}
+        if(zipCode != null && !zipCode.equals("")) { Common.sendKey(inputZipCode,zipCode);}
+        if(country != null && !country.equals("")){
+            Common.click(countryDropdown);
+            Common.click(getOptionCountry(country));
+        }
     }
     public static void AddCustomerOnlySave()
     {

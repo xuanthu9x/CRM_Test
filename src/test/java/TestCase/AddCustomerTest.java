@@ -6,9 +6,9 @@ import Pages.BasePage;
 import Pages.LoginPage;
 import keywords.Common;
 import org.openqa.selenium.By;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Optional;
 import org.testng.annotations.Test;
+
+import java.util.Hashtable;
 
 public class AddCustomerTest extends BaseTest {
     LoginPage loginPage;
@@ -38,17 +38,16 @@ public class AddCustomerTest extends BaseTest {
          VATNumber = customerExcel.getCellData("VAT_Number",1);
          phoneNumber = customerExcel.getCellData("Phone",1);
          website = customerExcel.getCellData("Website",1);
-         group = "Gold";
-         currency="USD$";
-         language="English";
-         address= customerExcel.getCellData("Address",1);
-         state="";
+         group = customerExcel.getCellData("Group",1);
+         currency=customerExcel.getCellData("Currency",1);
+         language= customerExcel.getCellData("DefaultLanguage",1);
+         state= customerExcel.getCellData("State",1);
          city = customerExcel.getCellData("City",1);
          zipCode = customerExcel.getCellData("ZipCode",1);
          country = customerExcel.getCellData("Country",1);
 
         //AddCustomerPage.InputAddCustomerWithOnlyRequireField(companyName);
-        AddCustomerPage.InputFullCustomerInfor(companyName,VATNumber,phoneNumber,website,group,language, address,city,state,zipCode,country);
+        AddCustomerPage.InputFullCustomerInfor(companyName,VATNumber,phoneNumber,website,group,currency,language, address,city,state,zipCode,country);
         AddCustomerPage.AddCustomerOnlySave();
         AddCustomerPage.verifyAlertMessage();
         Thread.sleep(3000);
@@ -74,7 +73,7 @@ public class AddCustomerTest extends BaseTest {
          zipCode= customerExcel.getCellData("ZipCode",2);
          country= customerExcel.getCellData("Country",2);
 
-        AddCustomerPage.InputFullCustomerInfor(companyName,VATNumber,phoneNumber,website,group,language, address,city,state,zipCode,country);
+        AddCustomerPage.InputFullCustomerInfor(companyName,VATNumber,phoneNumber,website,group,currency,language, address,city,state,zipCode,country);
         AddCustomerPage.AddCustomerOnlySave();
         AddCustomerPage.verifyAlertMessage();
         Thread.sleep(3000);
@@ -88,10 +87,9 @@ public class AddCustomerTest extends BaseTest {
         basePage= loginPage.Login("admin@example.com","123456");
         addCustomerPage=basePage.CustomerPage();
 
-         companyName= customerExcel.getCellData("Company",3);
+        companyName= customerExcel.getCellData("Company",3);
 
-        AddCustomerPage.InputAddCustomerWithOnlyRequireField(companyName);
-        //AddCustomerPage.InputFullCustomerInfor(companyName,VATNumber,phoneNumber,website,group,language, address,city,state,zipCode,country);
+        AddCustomerPage.InputFullCustomerInfor(companyName,VATNumber,phoneNumber,website,group,currency,language, address,city,state,zipCode,country);
         AddCustomerPage.AddCustomerAndContact();
         AddCustomerPage.verifyAlertMessage();
         Thread.sleep(5000);
@@ -118,7 +116,7 @@ public class AddCustomerTest extends BaseTest {
          zipCode= customerExcel.getCellData("ZipCode",4);
          country= customerExcel.getCellData("Country",4);
 
-        AddCustomerPage.InputFullCustomerInfor(companyName,VATNumber,phoneNumber,website,group, language,address,city,state,zipCode,country);
+        AddCustomerPage.InputFullCustomerInfor(companyName,VATNumber,phoneNumber,website,group,currency,language,address,city,state,zipCode,country);
         AddCustomerPage.AddCustomerAndContact();
         AddCustomerPage.verifyAlertMessage();
         Thread.sleep(3000);
@@ -128,12 +126,24 @@ public class AddCustomerTest extends BaseTest {
     }
 
     @Test(priority = 5)
-    public void ValidateRequireField(){
+    public void ValidateRequireField() throws InterruptedException {
         loginPage = new LoginPage(driver);
         basePage= loginPage.Login("admin@example.com","123456");
         addCustomerPage=basePage.CustomerPage();
 
-        AddCustomerPage.InputAddCustomerWithOnlyRequireField("");
+        companyName= "";
+        VATNumber = customerExcel.getCellData("VAT_Number",1);
+        phoneNumber = customerExcel.getCellData("Phone",1);
+        website = customerExcel.getCellData("Website",1);
+        group = customerExcel.getCellData("Group",1);
+        currency=customerExcel.getCellData("Currency",1);
+        language= customerExcel.getCellData("DefaultLanguage",1);
+        state= customerExcel.getCellData("State",1);
+        city = customerExcel.getCellData("City",1);
+        zipCode = customerExcel.getCellData("ZipCode",1);
+        country = customerExcel.getCellData("Country",1);
+
+        AddCustomerPage.InputFullCustomerInfor(companyName,VATNumber,phoneNumber,website,group,currency,language, address,city,state,zipCode,country);
         AddCustomerPage.AddCustomerOnlySave();
 
         AddCustomerPage.verifyRequireFieldWarning();
@@ -158,7 +168,7 @@ public class AddCustomerTest extends BaseTest {
          country = customerExcel.getCellData("Country",5);
 
         //AddCustomerPage.InputAddCustomerWithOnlyRequireField("T_Test8_231025");
-        AddCustomerPage.InputFullCustomerInfor(companyName,VATNumber,phoneNumber,website,group, language,address,city,state,zipCode,country);
+        AddCustomerPage.InputFullCustomerInfor(companyName,VATNumber,phoneNumber,website,group,currency,language,address,city,state,zipCode,country);
         AddCustomerPage.AddCustomerAndContact();
 
         String contactFirstName= contactExcel.getCellData("FirstName",1);
@@ -174,12 +184,52 @@ public class AddCustomerTest extends BaseTest {
         AddCustomerPage.veriryCustomerDetail(companyName, VATNumber, phoneNumber, website, group,currency,language, address, city, state, zipCode);
     }
 
-    @Test(dataProvider = "data_provider_customer", dataProviderClass = DataProviderFactory.class)
+    @Test(dataProvider = "data_provider_customer", dataProviderClass = DataProviderCustomer.class)
     public void AddCustomerWithFullInforDataProvider(String companyName,String VATNumber, String phoneNumber,String website,String group, String currency, String language, String address,String city, String state, String zipCode, String country) throws InterruptedException {
         loginPage = new LoginPage(driver);
         basePage= loginPage.Login("admin@example.com","123456");
         addCustomerPage=basePage.CustomerPage();
-        AddCustomerPage.InputFullCustomerInfor(companyName,VATNumber,phoneNumber,website,group,language, address,city,state,zipCode,country);
+        AddCustomerPage.InputFullCustomerInfor(companyName,VATNumber,phoneNumber,website,group,currency,language,address,city,state,zipCode,country);
+        AddCustomerPage.AddCustomerOnlySave();
+        AddCustomerPage.verifyAlertMessage();
+        Thread.sleep(3000);
+        AddCustomerPage.verifyAddCustomerSuccessfully(companyName);
+        AddCustomerPage.veriryCustomerDetail(companyName, VATNumber, phoneNumber, website, group,currency,language, address, city, state, zipCode);
+    }
+
+    // Sử dụng DataProvider với các dòng cụ thể dạng Hashtable
+    @Test(dataProvider = "data_provider_customer_excel_specific_rows_hashtable", dataProviderClass = DataProviderCustomer.class)
+    public void testLoginWithSpecificRowsHashtable(Hashtable < String, String > data) throws InterruptedException {
+        loginPage = new LoginPage(driver);
+        basePage= loginPage.Login("admin@example.com","123456");
+        addCustomerPage=basePage.CustomerPage();
+
+        companyName= data.get("Company");
+        VATNumber= data.get("VAT_Number");
+        phoneNumber= data.get("Phone");
+        website= data.get("Website");
+        group= data.get("Group");
+        currency= data.get("Currency");
+        language= data.get("DefaultLanguage");
+        address= data.get("Address");
+        city= data.get("City");
+        state= data.get("State");
+        zipCode= data.get("ZipCode");
+        country= data.get("Country");
+
+        System.out.println("Company: " + companyName);
+        System.out.println("VAT_Number: " + VATNumber);
+        System.out.println("Phone: " + phoneNumber);
+        System.out.println("Website: " + website);
+        System.out.println("Group: " + group);
+        System.out.println("Currency: " + currency);
+        System.out.println("DefaultLanguage: " + language);
+        System.out.println("Address: " + address);
+        System.out.println("City: " + city);
+        System.out.println("State: " + state);
+        System.out.println("ZipCode: " + zipCode);
+
+        AddCustomerPage.InputFullCustomerInfor(companyName,VATNumber,phoneNumber,website,group,currency,language, address,city,state,zipCode,country);
         AddCustomerPage.AddCustomerOnlySave();
         AddCustomerPage.verifyAlertMessage();
         Thread.sleep(3000);

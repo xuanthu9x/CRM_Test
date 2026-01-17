@@ -4,16 +4,13 @@ import helper.ExcelHelper;
 import helper.SystemHelper;
 import org.testng.annotations.DataProvider;
 
-public class DataProviderFactory {
+public class DataProviderLogin {
     @DataProvider(name = "data_provider_login")
     public Object[][] dataLogin() {
         return new Object[][]{{"admin@example.com", "123456"}, {"user1@example.com", "123456"}};
     }
 
-    @DataProvider(name = "data_provider_customer")
-    public Object[][] dataCustomer() {
-        return new Object[][]{{"T_Test2_170126", "VAT123", "0555555555","google.com","Gold","USD$","English","Lac Long Quan","Ho Chi Minh","Quan 11","123","United States"}};
-    }
+
 
     @DataProvider(name = "data_provider_login_excel")
     public Object[][] dataLoginFromExcel() {
