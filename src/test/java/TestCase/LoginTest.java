@@ -3,9 +3,12 @@ package TestCase;
 import Common.BaseTest;
 import Pages.LoginPage;
 import org.openqa.selenium.Cookie;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
+
+import java.util.Hashtable;
 
 public class LoginTest extends BaseTest {
     @Test (priority = 1)
@@ -69,5 +72,70 @@ public class LoginTest extends BaseTest {
         loginExcel.setCellData(session.getName(), "SessionName",1);
         loginExcel.setCellData(session.getValue(), "SessionValue",1);
 
+    }
+
+    @DataProvider(name = "data_provider_01")
+    public Object[][] dataLogin() {
+        return new Object[][]{{"admin@example.com", "123456"}, {"user1@example.com", "123456"}};
+    }
+    @Test(dataProvider = "data_provider_01")
+    public void LoginSuccessDemoDataProvideSameClass(String email, String password) throws InterruptedException {
+        System.out.println("Test case: Login with valid email and password");
+        LoginPage login = new LoginPage(driver);
+        LoginPage.LoginWithRememberMe(email, password);
+        //LoginPage.LoginTest(); // gọi hàm dùng email, password từ file properties
+        LoginPage.verifyLoginSuccess();
+    }
+
+    @Test(dataProvider = "data_provider_login", dataProviderClass = DataProviderFactory.class)
+    public void LoginSuccessDemoDataProvideNotSameClass(String email, String password) throws InterruptedException {
+        //System.out.println("Test case: Login with valid email and password");
+        LoginPage login = new LoginPage(driver);
+        LoginPage.LoginWithRememberMe(email, password);
+        //LoginPage.LoginTest(); // gọi hàm dùng email, password từ file properties
+        LoginPage.verifyLoginSuccess();
+    }
+
+    @Test(dataProvider = "data_provider_login_excel", dataProviderClass = DataProviderFactory.class)
+    public void testLoginFromDataProviderExcel(String email, String password) {
+        LoginPage login = new LoginPage(driver);
+        LoginPage.LoginWithRememberMe(email, password);
+        //LoginPage.LoginTest(); // gọi hàm dùng email, password từ file properties
+        LoginPage.verifyLoginSuccess();
+    }
+
+    @Test(priority = 1, dataProvider = "data_provider_login_excel_hashtable", dataProviderClass = DataProviderFactory.class)
+    public void testLoginFromDataProviderExcelHashtable(Hashtable< String, String > data) {
+        LoginPage login = new LoginPage(driver);
+        LoginPage.LoginWithRememberMe(data.get("Email"), data.get("Password"));
+        //LoginPage.LoginTest(); // gọi hàm dùng email, password từ file properties
+        LoginPage.verifyLoginSuccess();
+    }
+
+    // Sử dụng DataProvider với các dòng cụ thể (1, 3, 4)
+    @Test(dataProvider = "data_provider_login_excel_specific_rows", dataProviderClass = DataProviderFactory.class)
+    public void testLoginWithSpecificRows(String email, String password) {
+        System.out.println("Email: " + email);
+        System.out.println("Password: " + password);
+
+        LoginPage login = new LoginPage(driver);
+        LoginPage.LoginWithRememberMe(email,password);
+        //LoginPage.LoginTest(); // gọi hàm dùng email, password từ file properties
+        LoginPage.verifyLoginSuccess();
+    }
+
+    // Sử dụng DataProvider với các dòng cụ thể dạng Hashtable
+    @Test(dataProvider = "data_provider_login_excel_specific_rows_hashtable", dataProviderClass = DataProviderFactory.class)
+    public void testLoginWithSpecificRowsHashtable(Hashtable < String, String > data) {
+        String email = data.get("Email");
+        String password = data.get("Password");
+
+        System.out.println("Email: " + email);
+        System.out.println("Password: " + password);
+
+        LoginPage login = new LoginPage(driver);
+        LoginPage.LoginWithRememberMe(email,password);
+        //LoginPage.LoginTest(); // gọi hàm dùng email, password từ file properties
+        LoginPage.verifyLoginSuccess();
     }
 }

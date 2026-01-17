@@ -6,6 +6,8 @@ import Pages.BasePage;
 import Pages.LoginPage;
 import keywords.Common;
 import org.openqa.selenium.By;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Optional;
 import org.testng.annotations.Test;
 
 public class AddCustomerTest extends BaseTest {
@@ -171,4 +173,18 @@ public class AddCustomerTest extends BaseTest {
         Common.click(By.xpath("//li[contains(@class, 'customer_tab_profile')]"));
         AddCustomerPage.veriryCustomerDetail(companyName, VATNumber, phoneNumber, website, group,currency,language, address, city, state, zipCode);
     }
+
+    @Test(dataProvider = "data_provider_customer", dataProviderClass = DataProviderFactory.class)
+    public void AddCustomerWithFullInforDataProvider(String companyName,String VATNumber, String phoneNumber,String website,String group, String currency, String language, String address,String city, String state, String zipCode, String country) throws InterruptedException {
+        loginPage = new LoginPage(driver);
+        basePage= loginPage.Login("admin@example.com","123456");
+        addCustomerPage=basePage.CustomerPage();
+        AddCustomerPage.InputFullCustomerInfor(companyName,VATNumber,phoneNumber,website,group,language, address,city,state,zipCode,country);
+        AddCustomerPage.AddCustomerOnlySave();
+        AddCustomerPage.verifyAlertMessage();
+        Thread.sleep(3000);
+        AddCustomerPage.verifyAddCustomerSuccessfully(companyName);
+        AddCustomerPage.veriryCustomerDetail(companyName, VATNumber, phoneNumber, website, group,currency,language, address, city, state, zipCode);
+    }
+
 }
