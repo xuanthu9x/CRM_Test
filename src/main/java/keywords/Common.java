@@ -1,14 +1,28 @@
 package keywords;
 
+import helper.SystemHelper;
 import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.devtools.DevTools;
+
+import org.openqa.selenium.devtools.DevTools;
+import org.openqa.selenium.devtools.HasDevTools;
+import org.openqa.selenium.devtools.v141.page.Page;
+
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.io.FileHandler;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
+
+
+import java.io.File;
+import java.io.IOException;
 import java.time.Duration;
+
 
 public class Common {
     private static WebDriver driver;
@@ -184,6 +198,25 @@ public class Common {
     public static void pressEnterKey(By by){
         waitForElementVisible(by).sendKeys(Keys.ENTER);
         System.out.println("Press Enter key on element: " + by.toString());
+    }
+
+    public static void takeScreenshot(String fileName){
+
+        // Tạo tham chiếu của TakesScreenshot
+        TakesScreenshot ts = (TakesScreenshot) driver;
+        // Gọi hàm để chụp ảnh màn hình - getScreenshotAs
+        File source = ts.getScreenshotAs(OutputType.FILE);
+        // Kiểm tra folder tồn tại. Nếu không thì tạo mới folder theo đường dẫn
+        File theDir = new File(helper.PropertiesHelper.getValue("SCREENSHOT_PATH"));
+        if (!theDir.exists()) {
+            theDir.mkdirs();
+        }
+        //Lưu file ảnh với tên cụ thể vào đường dẫn
+        try {
+            FileHandler.copy(source, new File(helper.PropertiesHelper.getValue("SCREENSHOT_PATH")+fileName+".png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

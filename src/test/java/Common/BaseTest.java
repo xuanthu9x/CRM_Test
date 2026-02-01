@@ -3,12 +3,15 @@ package Common;
 import helper.ExcelHelper;
 import helper.PropertiesHelper;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import keywords.Common;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.ITestResult;
 import org.testng.annotations.*;
 
+import java.io.IOException;
 import java.time.Duration;
 
 public class BaseTest {
@@ -90,7 +93,12 @@ public class BaseTest {
     }
 
     @AfterMethod
-    public void closeDriver(){
+    public void closeDriver(ITestResult testResult) throws IOException {
+        Common common = new Common(driver);
+        if(ITestResult.FAILURE == testResult.getStatus()){
+            //Common.takeScreenshot(testResult.getName());
+            Common.takeFullPageScreenshot(testResult.getName());
+        }
         if(driver!=null){
             driver.quit();
         }

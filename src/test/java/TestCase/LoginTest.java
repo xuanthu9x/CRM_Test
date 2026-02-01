@@ -2,12 +2,21 @@ package TestCase;
 
 import Common.BaseTest;
 import Pages.LoginPage;
+import helper.SystemHelper;
+import keywords.Common;
 import org.openqa.selenium.Cookie;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.io.FileHandler;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.Method;
+import java.sql.DriverManager;
 import java.util.Hashtable;
 
 public class LoginTest extends BaseTest {
@@ -73,7 +82,7 @@ public class LoginTest extends BaseTest {
         loginExcel.setCellData(session.getValue(), "SessionValue",1);
 
     }
-
+//==================================================================================================
     @DataProvider(name = "data_provider_01")
     public Object[][] dataLogin() {
         return new Object[][]{{"admin@example.com", "123456"}, {"user1@example.com", "123456"}};
@@ -138,4 +147,14 @@ public class LoginTest extends BaseTest {
         //LoginPage.LoginTest(); // gọi hàm dùng email, password từ file properties
         LoginPage.verifyLoginSuccess();
     }
+    // ==================================================================================================
+    @Test (priority = 2)
+    public void takeScreenshotLoginPage(Method method){
+        System.out.println("Test case: Login with empty email");
+        LoginPage login = new LoginPage(driver);
+        LoginPage.LoginTest("11admin@example.com", "123456");
+        LoginPage.verifyLoginSuccess();
+
+    }
+
 }
