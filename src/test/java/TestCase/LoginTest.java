@@ -2,6 +2,7 @@ package TestCase;
 
 import Common.BaseTest;
 import Pages.LoginPage;
+import helper.CaptureHelper;
 import helper.SystemHelper;
 import keywords.Common;
 import org.openqa.selenium.Cookie;
@@ -150,9 +151,19 @@ public class LoginTest extends BaseTest {
     // ==================================================================================================
     @Test (priority = 2)
     public void takeScreenshotLoginPage(Method method){
-        System.out.println("Test case: Login with empty email");
+        //System.out.println("Test case: Login with empty email");
         LoginPage login = new LoginPage(driver);
         LoginPage.LoginTest("11admin@example.com", "123456");
+        LoginPage.verifyLoginSuccess();
+
+    }
+
+    @Test (priority = 2)
+    public void demoCaptureScreenLoginPage(Method method){
+        CaptureHelper.startRecord(method.getName());
+        //System.out.println("Test case: Login with empty email");
+        LoginPage login = new LoginPage(driver);
+        LoginPage.LoginTest("admin@example.com", "123456");
         LoginPage.verifyLoginSuccess();
 
     }

@@ -1,5 +1,6 @@
 package Common;
 
+import helper.CaptureHelper;
 import helper.ExcelHelper;
 import helper.PropertiesHelper;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -96,9 +97,9 @@ public class BaseTest {
     public void closeDriver(ITestResult testResult) throws IOException {
         Common common = new Common(driver);
         if(ITestResult.FAILURE == testResult.getStatus()){
-            //Common.takeScreenshot(testResult.getName());
-            Common.takeFullPageScreenshot(testResult.getName());
+            Common.takeScreenshot(testResult.getName());
         }
+        CaptureHelper.stopRecord();
         if(driver!=null){
             driver.quit();
         }
