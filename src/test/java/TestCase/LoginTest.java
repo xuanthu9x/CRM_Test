@@ -19,7 +19,7 @@ import java.lang.reflect.Method;
 import java.sql.DriverManager;
 import java.util.Hashtable;
 
-@Listeners(TestListener.class)
+//@Listeners(TestListener.class)
 public class LoginTest extends BaseTest {
     @Test (priority = 1)
     @Parameters ({"email","password"})
