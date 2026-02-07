@@ -59,11 +59,15 @@ public class CaptureHelper extends ScreenRecorder {
     }
 
     // Stop record video
-    public static void stopRecord() {
-        try {
+    public static void stopRecord() throws IOException {
+        /*try {
             screenRecorder.stop();
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }*/
+        if (screenRecorder != null) {
+            screenRecorder.stop();
+            screenRecorder = null;
         }
     }
 }

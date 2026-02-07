@@ -1,5 +1,6 @@
 package TestCase;
 
+import Annotations.RecordVideo;
 import Common.BaseTest;
 import Listener.TestListener;
 import Pages.LoginPage;
@@ -19,7 +20,7 @@ import java.lang.reflect.Method;
 import java.sql.DriverManager;
 import java.util.Hashtable;
 
-//@Listeners(TestListener.class)
+@Listeners(TestListener.class)
 public class LoginTest extends BaseTest {
     @Test (priority = 1)
     @Parameters ({"email","password"})
@@ -70,7 +71,7 @@ public class LoginTest extends BaseTest {
         LoginPage.LoginTest("abc", "123456");
         LoginPage.verifyEmailFormat();
     }
-    @Test (priority = 7)
+    @Test (enabled = false)
     public void DemoLoginWithDataInExcel(){
         LoginPage login = new LoginPage(driver);
         String email = loginExcel.getCellData("Email",1);
@@ -88,7 +89,7 @@ public class LoginTest extends BaseTest {
     public Object[][] dataLogin() {
         return new Object[][]{{"admin@example.com", "123456"}, {"user1@example.com", "123456"}};
     }
-    @Test(dataProvider = "data_provider_01")
+    @Test(dataProvider = "data_provider_01", enabled = false)
     public void LoginSuccessDemoDataProvideSameClass(String email, String password) throws InterruptedException {
         System.out.println("Test case: Login with valid email and password");
         LoginPage login = new LoginPage(driver);
@@ -97,7 +98,7 @@ public class LoginTest extends BaseTest {
         LoginPage.verifyLoginSuccess();
     }
 
-    @Test(dataProvider = "data_provider_login", dataProviderClass = DataProviderLogin.class)
+    @Test(dataProvider = "data_provider_login", dataProviderClass = DataProviderLogin.class, enabled = false)
     public void LoginSuccessDemoDataProvideNotSameClass(String email, String password) throws InterruptedException {
         //System.out.println("Test case: Login with valid email and password");
         LoginPage login = new LoginPage(driver);
@@ -106,7 +107,7 @@ public class LoginTest extends BaseTest {
         LoginPage.verifyLoginSuccess();
     }
 
-    @Test(dataProvider = "data_provider_login_excel", dataProviderClass = DataProviderLogin.class)
+    @Test(dataProvider = "data_provider_login_excel", dataProviderClass = DataProviderLogin.class, enabled = false)
     public void testLoginFromDataProviderExcel(String email, String password) {
         LoginPage login = new LoginPage(driver);
         LoginPage.LoginWithRememberMe(email, password);
@@ -114,7 +115,7 @@ public class LoginTest extends BaseTest {
         LoginPage.verifyLoginSuccess();
     }
 
-    @Test(priority = 1, dataProvider = "data_provider_login_excel_hashtable", dataProviderClass = DataProviderLogin.class)
+    @Test(priority = 1, dataProvider = "data_provider_login_excel_hashtable", dataProviderClass = DataProviderLogin.class, enabled = false)
     public void testLoginFromDataProviderExcelHashtable(Hashtable< String, String > data) {
         LoginPage login = new LoginPage(driver);
         LoginPage.LoginWithRememberMe(data.get("Email"), data.get("Password"));
@@ -123,7 +124,7 @@ public class LoginTest extends BaseTest {
     }
 
     // Sử dụng DataProvider với các dòng cụ thể (1, 3, 4)
-    @Test(dataProvider = "data_provider_login_excel_specific_rows", dataProviderClass = DataProviderLogin.class)
+    @Test(dataProvider = "data_provider_login_excel_specific_rows", dataProviderClass = DataProviderLogin.class, enabled = false)
     public void testLoginWithSpecificRows(String email, String password) {
         System.out.println("Email: " + email);
         System.out.println("Password: " + password);
@@ -135,7 +136,7 @@ public class LoginTest extends BaseTest {
     }
 
     // Sử dụng DataProvider với các dòng cụ thể dạng Hashtable
-    @Test(dataProvider = "data_provider_login_excel_specific_rows_hashtable", dataProviderClass = DataProviderLogin.class)
+    @Test(dataProvider = "data_provider_login_excel_specific_rows_hashtable", dataProviderClass = DataProviderLogin.class, enabled = false)
     public void testLoginWithSpecificRowsHashtable(Hashtable < String, String > data) {
         String email = data.get("Email");
         String password = data.get("Password");
@@ -159,12 +160,13 @@ public class LoginTest extends BaseTest {
     }
 
     @Test (priority = 2)
+    @RecordVideo
     public void demoCaptureScreenLoginPage(Method method){
-        throw new SkipException("Skipping The Test Method ");
-//        LoginPage login = new LoginPage(driver);
-//        LoginPage.LoginTest("admin@example.com", "123456");
-//        LoginPage.verifyLoginSuccess();
-
+      //  throw new SkipException("Skipping The Test Method ");
+        LoginPage login = new LoginPage(driver);
+        CaptureHelper.startRecord(method.getName());
+        LoginPage.LoginTest("admin@example.com", "123456");
+        LoginPage.verifyLoginSuccess();
     }
 
 }

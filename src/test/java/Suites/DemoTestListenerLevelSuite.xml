@@ -2,9 +2,9 @@
 
 <suite name="Suite">
 
-    <listeners>
-        <listener class-name="Listener.TestListener"></listener>
-    </listeners>
+<!--    <listeners>-->
+<!--        <listener class-name="Listener.TestListener"></listener>-->
+<!--    </listeners>-->
 
     <test name="Test">
         <classes>

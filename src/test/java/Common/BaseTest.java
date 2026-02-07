@@ -1,5 +1,6 @@
 package Common;
 
+import Annotations.RecordVideo;
 import helper.CaptureHelper;
 import helper.ExcelHelper;
 import helper.PropertiesHelper;
@@ -13,13 +14,18 @@ import org.testng.ITestResult;
 import org.testng.annotations.*;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.time.Duration;
 
 public class BaseTest {
-    public WebDriver driver;
+    public static WebDriver driver;
     protected ExcelHelper customerExcel;
     protected ExcelHelper contactExcel;
     protected ExcelHelper loginExcel;
+
+    public WebDriver getDriver() {
+        return driver;
+    }
 
     @BeforeSuite
     public void setupBeforeSuite(){
@@ -39,13 +45,16 @@ public class BaseTest {
     }
     @BeforeMethod
     @Parameters({"browser"})
-    public void createDriver(@Optional("chrome") String browser) {
+    public void createDriver(@Optional("chrome") String browser, Method method) {
         if(PropertiesHelper.getValue("browserName") != null){
             browser = PropertiesHelper.getValue("browserName");
         }else{
             browser = browser;
         }
        setupDriver(browser);
+        if (method.isAnnotationPresent(RecordVideo.class)) {
+            CaptureHelper.startRecord(method.getName());
+        }
     }
 
     public WebDriver setupDriver(@Optional("chrome") String browserName){
