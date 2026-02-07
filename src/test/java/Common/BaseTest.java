@@ -99,7 +99,7 @@ public class BaseTest {
         if(ITestResult.FAILURE == testResult.getStatus()){
             Common.takeScreenshot(testResult.getName());
         }
-        CaptureHelper.stopRecord();
+       // CaptureHelper.stopRecord();
         if(driver!=null){
             driver.quit();
         }

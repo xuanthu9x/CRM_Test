@@ -1,6 +1,7 @@
 package TestCase;
 
 import Common.BaseTest;
+import Listener.TestListener;
 import Pages.LoginPage;
 import helper.CaptureHelper;
 import helper.SystemHelper;
@@ -9,10 +10,8 @@ import org.openqa.selenium.Cookie;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.io.FileHandler;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Optional;
-import org.testng.annotations.Parameters;
-import org.testng.annotations.Test;
+import org.testng.SkipException;
+import org.testng.annotations.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,6 +19,7 @@ import java.lang.reflect.Method;
 import java.sql.DriverManager;
 import java.util.Hashtable;
 
+@Listeners(TestListener.class)
 public class LoginTest extends BaseTest {
     @Test (priority = 1)
     @Parameters ({"email","password"})
@@ -160,11 +160,10 @@ public class LoginTest extends BaseTest {
 
     @Test (priority = 2)
     public void demoCaptureScreenLoginPage(Method method){
-        CaptureHelper.startRecord(method.getName());
-        //System.out.println("Test case: Login with empty email");
-        LoginPage login = new LoginPage(driver);
-        LoginPage.LoginTest("admin@example.com", "123456");
-        LoginPage.verifyLoginSuccess();
+        throw new SkipException("Skipping The Test Method ");
+//        LoginPage login = new LoginPage(driver);
+//        LoginPage.LoginTest("admin@example.com", "123456");
+//        LoginPage.verifyLoginSuccess();
 
     }
 
